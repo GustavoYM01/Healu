@@ -1,33 +1,29 @@
-import { cadastrarUsuario } from "../firebase/funcoes";
-import { useState } from "react";
+import { cadastrarUsuario, login } from "@/firebase/funcoes";
 import { Usuario } from "@/models/Usuario";
 import Image from "next/image";
-import loadingSpinner from "../assets/loading-spinner.gif";
 import Link from "next/link";
+import { useState } from "react";
+import loadingSpinner from "../../assets/loading-spinner.gif";
 
-export default function Home() {
+export default function Entrar() {
   const [usuario, setUsuario] = useState<Usuario>({
     email: "",
     senha: "",
   });
   const [loading, setLoading] = useState(false);
   const [msgErro, setMsgErro] = useState("");
-  async function criarSalvarUsuario(e: any) {
+  async function autenticarUsuario(e: any) {
     e.preventDefault();
     if (usuario.email.length != 0 && usuario.senha.length != 0) {
-      const req = await cadastrarUsuario(
+      const req = await login(
         usuario.email.trim().toLocaleLowerCase(),
         usuario.senha.trim().toLocaleLowerCase()
       );
       if (req == "OK") {
         setLoading(true);
         location.href = "/home";
-      } else if (
-        req
-          ?.toLocaleLowerCase()
-          .includes("password should be at least 6 characters")
-      ) {
-        setMsgErro("Senha precisa ter no mínimo 6 caracteres");
+      } else if (req?.includes("auth/invalid-login-credentials")) {
+        setMsgErro("Email ou senha inválido(a)");
         setTimeout(() => {
           setMsgErro("");
         }, 3500);
@@ -45,23 +41,23 @@ export default function Home() {
     </div>
   ) : (
     <div>
-      <h1 className="text-center text-4xl pt-[2rem]">CADASTRE-SE</h1>
+      <h1 className="text-center text-4xl pt-[2rem]">ENTRAR</h1>
       <div className="mt-[2rem]">
         <form
           className="
-          flex flex-col items-center 
-          gap-[1rem]
-          "
-          onSubmit={criarSalvarUsuario}
+      flex flex-col items-center 
+      gap-[1rem]
+      "
+          onSubmit={autenticarUsuario}
         >
           <div>
             <label className="flex pb-2">Email</label>
             <input
               className="
-        outline-none 
-        bg-slate-500 text-white 
-        p-2 rounded-lg
-        "
+    outline-none 
+    bg-slate-500 text-white 
+    p-2 rounded-lg
+    "
               type="email"
               placeholder="Informe seu e-mail"
               value={usuario.email}
@@ -74,12 +70,12 @@ export default function Home() {
             <label className="flex pb-2">Senha</label>
             <input
               className="
-        outline-none 
-        bg-slate-500 text-white 
-        p-2 rounded-lg
-        "
+    outline-none 
+    bg-slate-500 text-white 
+    p-2 rounded-lg
+    "
               type="password"
-              placeholder="Informe uma senha"
+              placeholder="Informe a senha"
               value={usuario.senha}
               onChange={(e) =>
                 setUsuario({ ...usuario, senha: e.target.value })
@@ -89,8 +85,8 @@ export default function Home() {
           {msgErro && (
             <span
               className="
-          text-[firebrick] text-center max-w-[200px]
-          "
+      text-[firebrick] text-center max-w-[200px]
+      "
             >
               {msgErro}
             </span>
@@ -98,18 +94,18 @@ export default function Home() {
           <input
             className="bg-slate-800 text-white p-2 rounded-md cursor-pointer"
             type="submit"
-            value="Cadastrar"
+            value="Entrar"
           />
           <span>
-            Já possui conta?{" "}
+            Não tem uma conta?{" "}
             <Link
               className="
-          text-[#44cb4f]
-          hover:border-b-2
-          "
-              href={"/entrar"}
+      text-[#4461cb]
+      hover:border-b-2
+      "
+              href={"/"}
             >
-              Entre
+              Cadastre-se
             </Link>
           </span>
         </form>
