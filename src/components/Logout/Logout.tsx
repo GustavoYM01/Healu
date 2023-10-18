@@ -10,7 +10,6 @@ export default function Logout() {
       className="
     flex items-center justify-start
     gap-[0.5rem] py-2 pl-3
-    mt-[22rem]
     "
     >
       <svg

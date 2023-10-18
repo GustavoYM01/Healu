@@ -1,20 +1,22 @@
-import React from "react";
+import { useEffect } from "react";
 import ItensMenuLateral from "../ItensMenuLateral/ItensMenuLateral";
 import { alterarHref } from "@/functions/alterarHref";
+import { useRouter } from "next/router";
 import Logout from "../Logout/Logout";
 
 export default function MenuLateral() {
+  const router = useRouter();
   return (
     <menu
       className="
-      sticky top-[.1px]
+      fixed
       bg-[#EFF2FC] 
-      max-w-[15rem]
+      max-w-[15rem] h-[100vh]
       px-[2rem] py-[1rem]
       "
     >
       {/* LOGO HEALU */}
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center pb-[4rem]">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="40"
@@ -73,35 +75,33 @@ export default function MenuLateral() {
         </svg>
       </div>
       {/* FIM LOGO HEALU */}
-      <ItensMenuLateral
-        className="mt-[5rem]"
-        tipoItem="home"
-        texto="Home"
-        fazParteDaRota={location.href.includes("home")}
-        onClick={() => alterarHref("/home")}
-      />
-      <ItensMenuLateral
-        className="mt-[1rem]"
-        tipoItem="chat"
-        texto="Chat"
-        fazParteDaRota={location.href.includes("chats")}
-        onClick={() => alterarHref("/chats")}
-      />
-      <ItensMenuLateral
-        className="mt-[1rem]"
-        tipoItem="agenda"
-        texto="Agenda"
-        fazParteDaRota={location.href.includes("agenda")}
-        onClick={() => alterarHref("/agenda")}
-      />
-      <ItensMenuLateral
-        className="mt-[1rem]"
-        tipoItem="arquivos"
-        texto="Arquivos"
-        fazParteDaRota={location.href.includes("arquivos")}
-        onClick={() => alterarHref("/arquivos")}
-      />
-      <Logout />
+      <div className="flex flex-col justify-center gap-[1rem]">
+        <ItensMenuLateral
+          tipoItem="home"
+          texto="Home"
+          fazParteDaRota={router.asPath.includes("home")}
+          onClick={() => alterarHref("/home")}
+        />
+        <ItensMenuLateral
+          tipoItem="chat"
+          texto="Chat"
+          fazParteDaRota={router.asPath.includes("chat")}
+          onClick={() => alterarHref("/chats")}
+        />
+        <ItensMenuLateral
+          tipoItem="agenda"
+          texto="Agenda"
+          fazParteDaRota={router.asPath.includes("agenda")}
+          onClick={() => alterarHref("/agenda")}
+        />
+        <ItensMenuLateral
+          tipoItem="arquivos"
+          texto="Arquivos"
+          fazParteDaRota={router.asPath.includes("arquivos")}
+          onClick={() => alterarHref("/arquivos")}
+        />
+        <Logout />
+      </div>
     </menu>
   );
 }

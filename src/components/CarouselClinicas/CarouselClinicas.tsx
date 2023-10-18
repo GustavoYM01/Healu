@@ -6,6 +6,8 @@ import Image from "next/image";
 import { Carousel } from "@mantine/carousel";
 import { useEffect } from "react";
 import CarouselItem from "../CarouselItem/CarouselItem";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { firebase } from "@/firebase/config";
 
 export default function CarouselClinicas() {
   useEffect(() => {
@@ -13,19 +15,43 @@ export default function CarouselClinicas() {
     const el: any = document.getElementsByClassName(
       "mantine-2yup0d" || "mantine-UnstyledButton-root"
     );
-    if (el.length > 0) {
+    if (el.length > 0 && el2) {
       Array.from(el).forEach((element: any) => {
         element.style.backgroundColor = "#fff";
       });
-    }
-    if (el2) {
       el2.style.bottom = "-16px";
     }
   }, []);
 
-  function teste(e: any, id: string | number) {
+  async function acessarDetalhesClinica(
+    e: any,
+    id: string,
+    nomeClinica: string,
+    especialidade: string,
+    cidade: string,
+    uf: string
+  ) {
     e.stopPropagation();
-    console.log(id);
+    try {
+      const req = await getDoc(doc(firebase.db, "clinica", id));
+      if (req.exists()) location.href = `/clinica/${req.data().id}`;
+      else {
+        await setDoc(doc(firebase.db, "clinica", id), {
+          id,
+          nomeClinica,
+          especialidade,
+          cidade,
+          estado: uf,
+        })
+          .then(async () => {
+            const req = await getDoc(doc(firebase.db, "clinica", id));
+            if (req.exists()) location.href = `/clinica/${req.data().id}`;
+          })
+          .catch((e: any) => console.log("ERRO: " + e));
+      }
+    } catch (error: any) {
+      console.log(error?.message);
+    }
   }
 
   return (
@@ -65,7 +91,18 @@ export default function CarouselClinicas() {
             },
           }}
         >
-          <CarouselItem onClick={(e: any) => teste(e, 1)}>
+          <CarouselItem
+            onClick={(e: any) =>
+              acessarDetalhesClinica(
+                e,
+                "dermello",
+                "Dermello - clínica dermatológica",
+                "dermatologia",
+                "São Paulo",
+                "SP"
+              )
+            }
+          >
             <Carousel.Slide className="relative">
               <div className="flex items-center justify-center">
                 <Image className="max-w-[336px]" src={Dermelo1} alt="" />
@@ -77,7 +114,7 @@ export default function CarouselClinicas() {
             absolute top-[80%] 
             w-[100%] py-5
             text-white
-            bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,1)]
+            bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]
             "
               >
                 <div
@@ -94,7 +131,18 @@ export default function CarouselClinicas() {
               </div>
             </Carousel.Slide>
           </CarouselItem>
-          <CarouselItem onClick={(e: any) => teste(e, 2)}>
+          <CarouselItem
+            onClick={(e: any) =>
+              acessarDetalhesClinica(
+                e,
+                "dermello",
+                "Dermello - clínica dermatológica",
+                "dermatologia",
+                "São Paulo",
+                "SP"
+              )
+            }
+          >
             <Carousel.Slide className="relative">
               <div className="flex items-center justify-center">
                 <Image className="max-w-[336px]" src={Dermelo1} alt="" />
@@ -106,7 +154,7 @@ export default function CarouselClinicas() {
             absolute top-[80%] 
             w-[100%] py-5
             text-white
-            bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,1)]
+            bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]
             "
               >
                 <div
@@ -123,7 +171,18 @@ export default function CarouselClinicas() {
               </div>
             </Carousel.Slide>
           </CarouselItem>
-          <CarouselItem onClick={(e: any) => teste(e, 3)}>
+          <CarouselItem
+            onClick={(e: any) =>
+              acessarDetalhesClinica(
+                e,
+                "dermello",
+                "Dermello - clínica dermatológica",
+                "dermatologia",
+                "São Paulo",
+                "SP"
+              )
+            }
+          >
             <Carousel.Slide className="relative">
               <div className="flex items-center justify-center">
                 <Image className="max-w-[336px]" src={Dermelo1} alt="" />
@@ -135,7 +194,7 @@ export default function CarouselClinicas() {
             absolute top-[80%] 
             w-[100%] py-5
             text-white
-            bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,1)]
+            bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]
             "
               >
                 <div

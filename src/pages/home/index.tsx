@@ -36,13 +36,9 @@ export default function Principal() {
     </div>
   ) : (
     <div
-      className="
-      relative
-      overflow-x-hidden
-      "
     >
       <MenuLateral />
-      <FiltroPesquisarClinicas />
+      <FiltroPesquisarClinicas/>
       <CarouselClinicas />
       <GridEspecialidades>
         <div className="max-w-[63rem] flex flex-wrap items-center gap-[1rem]">
@@ -57,21 +53,6 @@ export default function Principal() {
         </div>
       </GridEspecialidades>
       <GridClinicas />
-      {/* <h1 className="text-4xl">Página Principal</h1>
-      <div className="mt-[2rem]">
-        👋 Bem-vindo{"(a)"} {usuario ? usuario.email.split("@")[0] : ""}
-      </div>
-      <button
-        onClick={logout}
-        className="
-    mt-[2rem] ml-[1rem] 
-    py-2 px-3
-    bg-blue-600 rounded-lg text-white
-    "
-      >
-        SAIR
-      </button>
-      <PesquisarUsuarios className="mt-[2rem] ml-[2rem]" /> */}
     </div>
   );
 }

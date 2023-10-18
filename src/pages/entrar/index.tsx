@@ -60,6 +60,7 @@ export default function Entrar() {
     "
               type="email"
               placeholder="Informe seu e-mail"
+              required
               value={usuario.email}
               onChange={(e) =>
                 setUsuario({ ...usuario, email: e.target.value })
@@ -76,6 +77,7 @@ export default function Entrar() {
     "
               type="password"
               placeholder="Informe a senha"
+              required
               value={usuario.senha}
               onChange={(e) =>
                 setUsuario({ ...usuario, senha: e.target.value })

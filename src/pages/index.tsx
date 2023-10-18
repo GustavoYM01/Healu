@@ -58,12 +58,13 @@ export default function Home() {
             <label className="flex pb-2">Email</label>
             <input
               className="
-        outline-none 
-        bg-slate-500 text-white 
-        p-2 rounded-lg
-        "
+              outline-none 
+              bg-slate-500 text-white 
+              p-2 rounded-lg
+              "
               type="email"
               placeholder="Informe seu e-mail"
+              required
               value={usuario.email}
               onChange={(e) =>
                 setUsuario({ ...usuario, email: e.target.value })
@@ -74,12 +75,13 @@ export default function Home() {
             <label className="flex pb-2">Senha</label>
             <input
               className="
-        outline-none 
-        bg-slate-500 text-white 
-        p-2 rounded-lg
-        "
+              outline-none 
+              bg-slate-500 text-white 
+              p-2 rounded-lg
+              "
               type="password"
               placeholder="Informe uma senha"
+              required
               value={usuario.senha}
               onChange={(e) =>
                 setUsuario({ ...usuario, senha: e.target.value })
