@@ -88,8 +88,7 @@ export default function GridClinicas(props: GridClinicasProps) {
 
   useEffect(() => {
     if (
-      Object.values(props.camposFiltrados).some((x) => x.trim() !== "") &&
-      props.camposFiltrados.especialidade !== ""
+      Object.values(props.camposFiltrados).some((x) => x.trim() !== "")
     ) {
       obterClinicasComFiltro(
         props.camposFiltrados.especialidade,
