@@ -3,11 +3,8 @@
  * @returns Se usuário foi autenticado, retorna true, se não, retorna false
  */
 export function verificarAutenticado() {
-  if (
+  return (
     localStorage.getItem("autenticado") !== null &&
     localStorage.getItem("autenticado") !== ""
-  )
-    return true;
-
-  return false;
+  );
 }

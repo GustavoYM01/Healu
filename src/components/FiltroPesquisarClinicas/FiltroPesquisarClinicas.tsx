@@ -1,8 +1,97 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Notificacoes from "../Notificacoes/Notificacoes";
 import Usuario from "../Usuario/Usuario";
+import { DocumentData, collection, getDocs, query } from "firebase/firestore";
+import { firebase } from "@/firebase/config";
+import { CamposFiltros } from "@/models/CamposFiltro";
 
-export default function FiltroPesquisarClinicas() {
+interface FiltroPesquisarClinicasProps {
+  funcaoCallBack: (especialidades: CamposFiltros) => void;
+}
+
+export default function FiltroPesquisarClinicas(
+  props: FiltroPesquisarClinicasProps
+) {
+  const [estado, setEstado] = useState(new Set());
+  const [cidade, setCidade] = useState(new Set());
+  const [mostrarLimparFiltros, setMostrarLimparFiltros] = useState(false);
+  const [camposFiltro, setCamposFiltro] = useState<CamposFiltros>({
+    cidade: "",
+    estado: "",
+    especialidade: "",
+  });
+
+  function renderizarEstados() {
+    if (estado.size > 0) {
+      return Array.from(estado).map((x: any, i: any) => (
+        <option key={i} value={x}>
+          {x}
+        </option>
+      ));
+    }
+  }
+
+  function renderizarCidades() {
+    if (cidade.size > 0) {
+      return Array.from(cidade).map((x: any, i: any) => (
+        <option key={i} value={x}>
+          {x}
+        </option>
+      ));
+    }
+  }
+
+  async function obterEstadosClinicas() {
+    const estadosSet = new Set();
+    const querySnapshot = await getDocs(
+      query(collection(firebase.db, "clinica"))
+    );
+    if (querySnapshot.size > 0) {
+      querySnapshot.forEach((doc) => {
+        const estado = doc.data().estado;
+        estadosSet.add(estado);
+      });
+      setEstado(estadosSet);
+    }
+  }
+
+  async function obterCidadesClinicas() {
+    const cidadeSet = new Set();
+    const querySnapshot = await getDocs(
+      query(collection(firebase.db, "clinica"))
+    );
+    if (querySnapshot.size > 0) {
+      querySnapshot.forEach((doc) => {
+        const cidade = doc.data().cidade;
+        cidadeSet.add(cidade);
+      });
+      setCidade(cidadeSet);
+    }
+  }
+
+  function submitForm(e: any) {
+    e.preventDefault();
+    if (Object.values(camposFiltro).some((x) => x.trim() !== "")) {
+      props.funcaoCallBack(camposFiltro);
+      setMostrarLimparFiltros(!mostrarLimparFiltros);
+    }
+  }
+
+  function limparFiltros() {
+    setCamposFiltro({
+      cidade: "",
+      estado: "",
+      especialidade: "",
+    });
+    props.funcaoCallBack({} as CamposFiltros);
+    setMostrarLimparFiltros(!mostrarLimparFiltros);
+  }
+
+  useEffect(() => {
+    obterEstadosClinicas();
+    obterCidadesClinicas();
+  }, []);
+
   return (
     <section
       className="
@@ -12,10 +101,11 @@ export default function FiltroPesquisarClinicas() {
       min-h-fit
       "
     >
-      <div
+      <form
         className="
-      flex justify-between items-center gap-[1rem] mt-[1rem]
-      "
+        flex justify-between items-center gap-[1rem] mt-[1rem]
+        "
+        onSubmit={(e) => submitForm(e)}
       >
         <div className="flex items-center gap-[1rem] ml-[1rem]">
           {/* ESTADO */}
@@ -26,25 +116,15 @@ export default function FiltroPesquisarClinicas() {
         bg-[#EFF2FC] outline-none
         rounded-md p-2
         "
+              value={camposFiltro.estado}
+              onChange={(e) =>
+                setCamposFiltro({ ...camposFiltro, estado: e.target.value })
+              }
             >
               <option className="font-medium" value="">
                 Estado
               </option>
-              <option className="font-medium" value="SP">
-                SP
-              </option>
-              <option className="font-medium" value="DF">
-                DF
-              </option>
-              <option className="font-medium" value="RJ">
-                RJ
-              </option>
-              <option className="font-medium" value="MG">
-                MG
-              </option>
-              <option className="font-medium" value="AM">
-                AM
-              </option>
+              {renderizarEstados()}
             </select>
           </div>
           {/* CIDADE */}
@@ -55,45 +135,47 @@ export default function FiltroPesquisarClinicas() {
         bg-[#EFF2FC] outline-none
         rounded-md p-2
         "
+              value={camposFiltro.cidade}
+              onChange={(e) =>
+                setCamposFiltro({ ...camposFiltro, cidade: e.target.value })
+              }
             >
               <option className="font-medium" value="">
                 Cidade
               </option>
-              <option className="font-medium" value="Sorocaba">
-                Sorocaba
-              </option>
-              <option className="font-medium" value="Votorantim">
-                Votorantim
-              </option>
-              <option className="font-medium" value="Itu">
-                Itu
-              </option>
-              <option className="font-medium" value="Ipero">
-                Iperó
-              </option>
-              <option className="font-medium" value="Piedade">
-                Piedade
-              </option>
+              {renderizarCidades()}
             </select>
           </div>
           {/* ESPECIALIDADE */}
           <div className="relative">
             <input
               className="
-        bg-[#EFF2FC]
-        rounded-md
-        w-[25rem] outline-none p-2
-        "
+              bg-[#EFF2FC]
+              rounded-md
+              w-[25rem] outline-none 
+              py-2 pl-2 pr-[3rem]
+              "
               type="text"
               placeholder="Especialidade"
+              value={camposFiltro.especialidade}
+              onChange={(e) =>
+                setCamposFiltro({
+                  ...camposFiltro,
+                  especialidade: e.target.value,
+                })
+              }
             />
             <svg
-              className="absolute right-[1rem] top-[.5rem]"
+              className="
+              absolute right-[1rem] top-[.3rem]
+              cursor-pointer
+              "
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
               viewBox="0 0 24 24"
               fill="none"
+              onClick={(e: any) => submitForm(e)}
             >
               <path
                 fill-rule="evenodd"
@@ -103,12 +185,22 @@ export default function FiltroPesquisarClinicas() {
               />
             </svg>
           </div>
+          {mostrarLimparFiltros && (
+            <div>
+              <button
+                onClick={limparFiltros}
+                className="bg-[#EFF2FC] p-2 rounded-md"
+              >
+                Limpar filtros
+              </button>
+            </div>
+          )}
         </div>
         <div className="flex items-center gap-[1rem] mr-[2rem]">
           <Notificacoes />
           <Usuario />
         </div>
-      </div>
+      </form>
     </section>
   );
 }
