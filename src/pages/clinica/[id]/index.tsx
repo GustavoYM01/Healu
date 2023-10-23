@@ -71,7 +71,21 @@ export default function Clinica() {
         fixed top-0
         "
         style={{
-          backgroundImage: `url(${CardioExcel.src})`,
+          backgroundImage: `url(${
+            id?.includes("cardioexcel")
+              ? CardioExcel.src
+              : id?.includes("pedivida")
+              ? Pedivida.src
+              : id?.includes("ortomove")
+              ? Ortomove.src
+              : id?.includes("gynelogic")
+              ? Gynelogic.src
+              : id?.includes("demelo")
+              ? DeMelo.src
+              : id?.includes("dermello")
+              ? Dermello.src
+              : ""
+          })`,
           height: "22rem",
           backgroundRepeat: "no-repeat",
           backgroundSize: "100%",
