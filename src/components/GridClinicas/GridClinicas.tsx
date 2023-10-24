@@ -13,6 +13,7 @@ interface GridClinicasProps {
 export default function GridClinicas(props: GridClinicasProps) {
   const [carregando, setCarregando] = useState(true);
   const [resultadosPesquisa, setResultadosPesquisa] = useState<any[]>([]);
+  const [nenhumResultado, setNenhumResultado] = useState(false);
   const [todasClinicas, setTodasClinicas] = useState<any[]>([]);
 
   async function obterClinicasComFiltro(
@@ -21,6 +22,7 @@ export default function GridClinicas(props: GridClinicasProps) {
     cidade: string
   ) {
     try {
+      setNenhumResultado(false);
       const clinicCollectionRef = collection(firebase.db, "clinica");
       let queryRef = query(clinicCollectionRef);
 
@@ -37,9 +39,10 @@ export default function GridClinicas(props: GridClinicasProps) {
         if (x.size > 0) {
           let arrResults: any[] = [];
           x.forEach((v) => arrResults.push(v.data()));
+          console.log(arrResults);
           setResultadosPesquisa(arrResults);
           setCarregando(false);
-        }
+        } else setNenhumResultado(true);
       });
     } catch (error) {
       console.log(error);
@@ -50,6 +53,7 @@ export default function GridClinicas(props: GridClinicasProps) {
   async function obterTodasClinicas() {
     try {
       setResultadosPesquisa([]);
+      setNenhumResultado(false);
       await getDocs(query(collection(firebase.db, "clinica"))).then((x) => {
         if (x.size > 0) {
           let arrResults: any[] = [];
@@ -87,9 +91,7 @@ export default function GridClinicas(props: GridClinicasProps) {
   }
 
   useEffect(() => {
-    if (
-      Object.values(props.camposFiltrados).some((x) => x.trim() !== "")
-    ) {
+    if (Object.values(props.camposFiltrados).some((x) => x.trim() !== "")) {
       obterClinicasComFiltro(
         props.camposFiltrados.especialidade,
         props.camposFiltrados.estado,
@@ -123,6 +125,8 @@ export default function GridClinicas(props: GridClinicasProps) {
           </div>
         ) : resultadosPesquisa.length > 0 ? (
           renderizarClinicasFiltradas()
+        ) : nenhumResultado ? (
+          <div>Nenhum resultado encontrado</div>
         ) : (
           renderizarTodasClinicas()
         )}

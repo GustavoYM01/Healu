@@ -84,6 +84,8 @@ export default function Clinica() {
               ? DeMelo.src
               : id?.includes("dermello")
               ? Dermello.src
+              : id?.includes("nutrife")
+              ? Nutrife.src
               : ""
           })`,
           height: "22rem",

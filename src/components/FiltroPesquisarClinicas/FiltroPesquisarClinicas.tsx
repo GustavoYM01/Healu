@@ -7,6 +7,8 @@ import { CamposFiltros } from "@/models/CamposFiltro";
 
 interface FiltroPesquisarClinicasProps {
   funcaoCallBack: (especialidades: CamposFiltros) => void;
+  limpar: boolean;
+  alterarLimpar: (mostrar: boolean) => void;
 }
 
 export default function FiltroPesquisarClinicas(
@@ -71,9 +73,9 @@ export default function FiltroPesquisarClinicas(
 
   function submitForm(e: any) {
     e.preventDefault();
+    props.alterarLimpar(true);
     if (Object.values(camposFiltro).some((x) => x.trim() !== "")) {
       props.funcaoCallBack(camposFiltro);
-      setMostrarLimparFiltros(!mostrarLimparFiltros);
     }
   }
 
@@ -84,13 +86,14 @@ export default function FiltroPesquisarClinicas(
       especialidade: "",
     });
     props.funcaoCallBack({} as CamposFiltros);
-    setMostrarLimparFiltros(!mostrarLimparFiltros);
+    setMostrarLimparFiltros(false);
+    props.alterarLimpar(false);
   }
 
   useEffect(() => {
     obterEstadosClinicas();
     obterCidadesClinicas();
-  }, []);
+  }, [mostrarLimparFiltros, props.limpar]);
 
   return (
     <section
@@ -185,16 +188,17 @@ export default function FiltroPesquisarClinicas(
               />
             </svg>
           </div>
-          {mostrarLimparFiltros && (
-            <div>
-              <button
-                onClick={limparFiltros}
-                className="bg-[#EFF2FC] p-2 rounded-md"
-              >
-                Limpar filtros
-              </button>
-            </div>
-          )}
+          {mostrarLimparFiltros ||
+            (props.limpar && (
+              <div>
+                <button
+                  onClick={limparFiltros}
+                  className="bg-[#EFF2FC] p-2 rounded-md"
+                >
+                  Limpar filtros
+                </button>
+              </div>
+            ))}
         </div>
         <div className="flex items-center gap-[1rem] mr-[2rem]">
           <Notificacoes />

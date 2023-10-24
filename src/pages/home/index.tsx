@@ -15,9 +15,18 @@ import { CamposFiltros } from "@/models/CamposFiltro";
 
 export default function Principal() {
   const [carregando, setCarregando] = useState(true);
+  const [mostrarBtnLimparFiltros, setMostrarLimparFiltros] = useState(false);
   const [objCamposFiltrados, setObjCamposFiltrados] = useState(
     {} as CamposFiltros
   );
+
+  function teste() {
+    return (
+      <div className="absolute top-[2rem]">
+        <h1>BLABLA</h1>
+      </div>
+    );
+  }
 
   useEffect(() => {
     if (verificarAutenticado()) {
@@ -34,7 +43,11 @@ export default function Principal() {
   ) : (
     <div>
       <MenuLateral />
-      <FiltroPesquisarClinicas funcaoCallBack={setObjCamposFiltrados} />
+      <FiltroPesquisarClinicas
+        funcaoCallBack={setObjCamposFiltrados}
+        limpar={mostrarBtnLimparFiltros}
+        alterarLimpar={setMostrarLimparFiltros}
+      />
       {!(
         Object.values(objCamposFiltrados).length > 0 &&
         Object.values(objCamposFiltrados).some((x) => x.trim() !== "")
@@ -43,14 +56,46 @@ export default function Principal() {
           <CarouselClinicas />
           <GridEspecialidades>
             <div className="max-w-[63rem] flex flex-wrap items-center gap-[1rem]">
-              <ItemGridEspecialidade especialidade="Clínico Geral" />
-              <ItemGridEspecialidade especialidade="Ginecologia" />
-              <ItemGridEspecialidade especialidade="Ortopedia" />
-              <ItemGridEspecialidade especialidade="Pediatria" />
-              <ItemGridEspecialidade especialidade="Oftalmologia" />
-              <ItemGridEspecialidade especialidade="Nutrição" />
-              <ItemGridEspecialidade especialidade="Dermatologia" />
-              <ItemGridEspecialidade especialidade="Endocrinologia" />
+              <ItemGridEspecialidade
+                funcaoDefinirEspecialidade={setObjCamposFiltrados}
+                mostrarBtnLimparFiltros={setMostrarLimparFiltros}
+                especialidade="Clínico Geral"
+              />
+              <ItemGridEspecialidade
+                funcaoDefinirEspecialidade={setObjCamposFiltrados}
+                mostrarBtnLimparFiltros={setMostrarLimparFiltros}
+                especialidade="Ginecologia"
+              />
+              <ItemGridEspecialidade
+                funcaoDefinirEspecialidade={setObjCamposFiltrados}
+                mostrarBtnLimparFiltros={setMostrarLimparFiltros}
+                especialidade="Ortopedia"
+              />
+              <ItemGridEspecialidade
+                funcaoDefinirEspecialidade={setObjCamposFiltrados}
+                mostrarBtnLimparFiltros={setMostrarLimparFiltros}
+                especialidade="Pediatria"
+              />
+              <ItemGridEspecialidade
+                funcaoDefinirEspecialidade={setObjCamposFiltrados}
+                mostrarBtnLimparFiltros={setMostrarLimparFiltros}
+                especialidade="Oftalmologia"
+              />
+              <ItemGridEspecialidade
+                funcaoDefinirEspecialidade={setObjCamposFiltrados}
+                mostrarBtnLimparFiltros={setMostrarLimparFiltros}
+                especialidade="Nutrição"
+              />
+              <ItemGridEspecialidade
+                funcaoDefinirEspecialidade={setObjCamposFiltrados}
+                mostrarBtnLimparFiltros={setMostrarLimparFiltros}
+                especialidade="Dermatologia"
+              />
+              <ItemGridEspecialidade
+                funcaoDefinirEspecialidade={setObjCamposFiltrados}
+                mostrarBtnLimparFiltros={setMostrarLimparFiltros}
+                especialidade="Endocrinologia"
+              />
             </div>
           </GridEspecialidades>
         </>
