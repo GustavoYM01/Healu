@@ -9,6 +9,7 @@ import Gynelogic from "../../../assets/clinica-gynelogic.jpg";
 import DeMelo from "../../../assets/clinica-demelo.jpg";
 import CardioExcel from "../../../assets/clinica-cardioexcel.jpg";
 import Dermello from "../../../assets/dermelo2.jpg";
+import DermelloBG from "../../../assets/dermelo-background.jpg";
 import { DocumentData, doc, getDoc } from "firebase/firestore";
 import { firebase } from "@/firebase/config";
 import { verificarIdQuery } from "@/functions/verificarIdQuery";
@@ -16,10 +17,12 @@ import MenuLateral from "@/components/menuLateral/MenuLateral";
 import Loading from "../../../assets/loading-spinner.gif";
 import Notificacoes from "@/components/Notificacoes/Notificacoes";
 import Usuario from "@/components/Usuario/Usuario";
-import FiltroPesquisarClinicas from "@/components/FiltroPesquisarClinicas/FiltroPesquisarClinicas";
+import CardAvaliacoesClinica from "@/components/CardAvaliacoesClinica/CardAvaliacoesClinica";
+import { Carousel } from "@mantine/carousel";
 
 export default function Clinica() {
   const [loading, setLoading] = useState(false);
+  const [subMenu, setSubMenu] = useState("destaques");
   const [infos, setInfos] = useState<any>({});
 
   const router = useRouter();
@@ -38,10 +41,6 @@ export default function Clinica() {
     }
   }
 
-  // function primeiraLetraMaiuscula(palavra: string) {
-  //   return palavra.charAt(0).toUpperCase() + palavra.slice(1);
-  // }
-
   function renderizarInfosClinica() {
     return (
       <div className="flex flex-col pt-[1rem] text-white">
@@ -52,6 +51,16 @@ export default function Clinica() {
   }
 
   useEffect(() => {
+    const el2: any = document.querySelector(".mantine-Carousel-indicators");
+    const el: any = document.getElementsByClassName(
+      "mantine-2yup0d" || "mantine-UnstyledButton-root"
+    );
+    if (el.length > 0 && el2) {
+      Array.from(el).forEach((element: any) => {
+        element.style.backgroundColor = "#fff";
+      });
+      el2.style.bottom = "-16px";
+    }
     if (verificarIdQuery(id)) {
       obterDadosClinica(id);
       setLoading(false);
@@ -63,12 +72,12 @@ export default function Clinica() {
       <Image src={LoadingSpiner} alt="" />
     </div>
   ) : (
-    <>
+    <div>
       <MenuLateral />
       <div
         className="
         w-[86%] left-[224px]
-        fixed top-0
+        absolute top-0
         "
         style={{
           backgroundImage: `url(${
@@ -83,7 +92,7 @@ export default function Clinica() {
               : id?.includes("demelo")
               ? DeMelo.src
               : id?.includes("dermello")
-              ? Dermello.src
+              ? DermelloBG.src
               : id?.includes("nutrife")
               ? Nutrife.src
               : ""
@@ -226,6 +235,122 @@ export default function Clinica() {
         Se for informações, ...
         Se for avaliações, ...
       */}
-    </>
+      <div
+        className="
+      w-[calc(100%-244px)]
+      absolute left-[244px] top-[23rem] 
+      overflow-y-auto overflow-x-hidden
+      pb-[2rem]
+      "
+      >
+        {/* DESTAQUES */}
+        <div className="flex flex-wrap gap-[2rem]">
+          <iframe
+            className="rounded-lg"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117083.04458141731!2d-46.85817933206246!3d-23.50208664529539!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce56dc138906d5%3A0xfa2f75da82a1dd3c!2sHospital%20Israelita%20Albert%20Einstein!5e0!3m2!1spt-BR!2sbr!4v1698166483407!5m2!1spt-BR!2sbr"
+            height={530}
+            width={"50%"}
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+          <div>
+            <CardAvaliacoesClinica avaliacaoMedia={infos.avaliacaoMedia} />
+            <div className="pt-[2rem]">
+              <Carousel
+                className="max-w-[340px]"
+                withIndicators
+                loop
+                styles={{
+                  indicator: {
+                    display: "block",
+                    width: ".5rem",
+                    height: ".5rem",
+                    transition: "width 250ms ease",
+                    "&[aria-hidden]": {
+                      background: "rgb(210, 205, 205)",
+                    },
+                    "&[data-active]": {
+                      backgroundColor: "#2642D9",
+                    },
+                  },
+                }}
+              >
+                <Carousel.Slide>
+                  <Image
+                    className="rounded-lg"
+                    src={
+                      id && id.includes("nutrife")
+                        ? Nutrife
+                        : id && id.includes("pedivida")
+                        ? Pedivida
+                        : id && id.includes("ortomove")
+                        ? Ortomove
+                        : id && id.includes("gynelogic")
+                        ? Gynelogic
+                        : id && id.includes("demelo")
+                        ? DeMelo
+                        : id && id.includes("cardioexcel")
+                        ? CardioExcel
+                        : id && id.includes("dermello")
+                        ? Dermello
+                        : ""
+                    }
+                    alt=""
+                  />
+                </Carousel.Slide>
+                <Carousel.Slide>
+                  <Image
+                    className="rounded-lg"
+                    src={
+                      id && id.includes("nutrife")
+                        ? Nutrife
+                        : id && id.includes("pedivida")
+                        ? Pedivida
+                        : id && id.includes("ortomove")
+                        ? Ortomove
+                        : id && id.includes("gynelogic")
+                        ? Gynelogic
+                        : id && id.includes("demelo")
+                        ? DeMelo
+                        : id && id.includes("cardioexcel")
+                        ? CardioExcel
+                        : id && id.includes("dermello")
+                        ? Dermello
+                        : ""
+                    }
+                    alt=""
+                  />
+                </Carousel.Slide>
+                <Carousel.Slide>
+                  <Image
+                    className="rounded-lg"
+                    src={
+                      id && id.includes("nutrife")
+                        ? Nutrife
+                        : id && id.includes("pedivida")
+                        ? Pedivida
+                        : id && id.includes("ortomove")
+                        ? Ortomove
+                        : id && id.includes("gynelogic")
+                        ? Gynelogic
+                        : id && id.includes("demelo")
+                        ? DeMelo
+                        : id && id.includes("cardioexcel")
+                        ? CardioExcel
+                        : id && id.includes("dermello")
+                        ? Dermello
+                        : ""
+                    }
+                    alt=""
+                  />
+                </Carousel.Slide>
+              </Carousel>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

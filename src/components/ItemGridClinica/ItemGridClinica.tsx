@@ -15,6 +15,7 @@ interface ItemGridClinicaProps {
   nomeClinica: string;
   uf: string;
   especialidade: string;
+  avaliacaoMedia: number;
   key: any;
 }
 
@@ -75,11 +76,10 @@ export default function ItemGridClinica(props: ItemGridClinicaProps) {
           </div>
           {/* MOSTRADOR ESTRELAS */}
           <div className="flex items-center">
-            <MostradorEstrelas />
-            <MostradorEstrelas />
-            <MostradorEstrelas />
-            <MostradorEstrelas />
-            <MostradorEstrelas />
+            <MostradorEstrelas
+              qtdEstrelas={5}
+              mediaAvaliacao={props.avaliacaoMedia}
+            />
           </div>
         </div>
         {/* ESPECIALIDADE CLÍNICA */}

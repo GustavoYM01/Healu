@@ -74,6 +74,7 @@ export default function GridClinicas(props: GridClinicasProps) {
         key={i}
         nomeClinica={x.nomeClinica.split("-")[0].trim()}
         uf={x.estado}
+        avaliacaoMedia={x.avaliacaoMedia}
         especialidade={x.especialidade}
       />
     ));
@@ -85,6 +86,7 @@ export default function GridClinicas(props: GridClinicasProps) {
         key={i}
         nomeClinica={x.nomeClinica.split("-")[0].trim()}
         uf={x.estado}
+        avaliacaoMedia={x.avaliacaoMedia}
         especialidade={x.especialidade}
       />
     ));

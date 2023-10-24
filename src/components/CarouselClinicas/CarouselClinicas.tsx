@@ -2,6 +2,7 @@ import Yoshi from "../../assets/yoshi-férias.jpg";
 import Dermelo1 from "../../assets/dermelo1.jpg";
 import Dermelo2 from "../../assets/dermelo2.jpg";
 import Dermelo3 from "../../assets/dermelo3.jpg";
+import Dermello from "../../assets/dermello-placeholder.jpg";
 import Image from "next/image";
 import { Carousel } from "@mantine/carousel";
 import { useEffect } from "react";
@@ -105,9 +106,7 @@ export default function CarouselClinicas() {
           >
             <Carousel.Slide className="relative">
               <div className="flex items-center justify-center">
-                <Image className="max-w-[336px]" src={Dermelo1} alt="" />
-                <Image className="max-w-[336px]" src={Dermelo2} alt="" />
-                <Image className="max-w-[336px]" src={Dermelo3} alt="" />
+                <Image className="max-w-[1008px]" src={Dermello} alt="" />
               </div>
               <div
                 className="
@@ -145,9 +144,7 @@ export default function CarouselClinicas() {
           >
             <Carousel.Slide className="relative">
               <div className="flex items-center justify-center">
-                <Image className="max-w-[336px]" src={Dermelo1} alt="" />
-                <Image className="max-w-[336px]" src={Dermelo2} alt="" />
-                <Image className="max-w-[336px]" src={Dermelo3} alt="" />
+                <Image className="max-w-[1008px]" src={Dermello} alt="" />
               </div>
               <div
                 className="
@@ -185,9 +182,7 @@ export default function CarouselClinicas() {
           >
             <Carousel.Slide className="relative">
               <div className="flex items-center justify-center">
-                <Image className="max-w-[336px]" src={Dermelo1} alt="" />
-                <Image className="max-w-[336px]" src={Dermelo2} alt="" />
-                <Image className="max-w-[336px]" src={Dermelo3} alt="" />
+                <Image className="max-w-[1008px]" src={Dermello} alt="" />
               </div>
               <div
                 className="

@@ -20,14 +20,6 @@ export default function Principal() {
     {} as CamposFiltros
   );
 
-  function teste() {
-    return (
-      <div className="absolute top-[2rem]">
-        <h1>BLABLA</h1>
-      </div>
-    );
-  }
-
   useEffect(() => {
     if (verificarAutenticado()) {
       setCarregando(false);
