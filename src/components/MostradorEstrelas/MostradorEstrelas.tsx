@@ -7,7 +7,7 @@ interface MostradorEstrelasProps {
 }
 
 export default function MostradorEstrelas(props: MostradorEstrelasProps) {
-  const mediaArredondada = Math.round(props.mediaAvaliacao);
+  const mediaArredondada = Math.floor(props.mediaAvaliacao);
   const estrelas = Array.from({ length: props.qtdEstrelas }, (_, index) => {
     const preenchida = index < mediaArredondada;
     return preenchida ? (
