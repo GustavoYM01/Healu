@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MostradorEstrelas from "../MostradorEstrelas/MostradorEstrelas";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { firebase } from "@/firebase/config";
+import { useRouter } from "next/router";
+import { verificarIdQuery } from "@/functions/verificarIdQuery";
 
 interface CardAvaliacoesClinicaProps {
   avaliacaoMedia: number;
@@ -8,7 +12,10 @@ interface CardAvaliacoesClinicaProps {
 export default function CardAvaliacoesClinica({
   avaliacaoMedia,
 }: CardAvaliacoesClinicaProps) {
-  function renderizarBarrasAvaliacao() {
+  const [qtdAvaliacoes, setQtdAvaliacoes] = useState(0);
+  const { id } = useRouter().query;
+
+  const renderizarBarrasAvaliacao = () => {
     return Array.from(
       { length: 6 },
       (_, index) =>
@@ -41,7 +48,34 @@ export default function CardAvaliacoesClinica({
           </div>
         )
     );
-  }
+  };
+
+  const obterInfosClincaEQtdAvaliacoes = async (idClinica: any) => {
+    try {
+      await getDocs(
+        query(collection(firebase.db, "clinica"), where("id", "==", idClinica))
+      ).then((x) => {
+        if (x.size > 0) {
+          let infosArr: any[] = [];
+          x.forEach((v) => infosArr.push(v.data()));
+          infosArr.map((x) => {
+            if (x.hasOwnProperty("avaliacoes"))
+              setQtdAvaliacoes(Object.keys(x.avaliacoes).length);
+            else setQtdAvaliacoes(0);
+          });
+          return;
+        }
+      });
+      return;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (verificarIdQuery(id)) obterInfosClincaEQtdAvaliacoes(id);
+  }, [id]);
+
   return (
     <div
       className="
@@ -51,7 +85,9 @@ export default function CardAvaliacoesClinica({
     >
       <div className="flex items-center gap-[2rem]">
         <div className="flex flex-col items-center gap-[.5rem]">
-          <span className="text-4xl">{avaliacaoMedia}</span>
+          <span className="text-4xl">
+            {avaliacaoMedia && avaliacaoMedia.toFixed(1)}
+          </span>
           <div>
             <MostradorEstrelas
               qtdEstrelas={5}
@@ -59,7 +95,11 @@ export default function CardAvaliacoesClinica({
               className="gap-[.3rem]"
             />
           </div>
-          <div className="text-sm">X Avaliações</div>
+          {qtdAvaliacoes <= 1 ? (
+            <div className="text-sm">{qtdAvaliacoes} Avaliação</div>
+          ) : qtdAvaliacoes > 1 ? (
+            <div className="text-sm">{qtdAvaliacoes} Avaliações</div>
+          ) : null}
         </div>
         <div className="flex">
           <div className="flex flex-col items-center">

@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import Loading from "../../assets/loading-spinner.gif";
 import Image from "next/image";
 import { verificarAutenticado } from "@/functions/verificarUsuarioAutenticado";
-import MenuLateral from "@/components/menuLateral/MenuLateral";
+import MenuLateral from "@/components/MenuLateral/MenuLateral";
 import FiltroPesquisarClinicas from "@/components/FiltroPesquisarClinicas/FiltroPesquisarClinicas";
 import CarouselClinicas from "@/components/CarouselClinicas/CarouselClinicas";
 import GridEspecialidades from "@/components/GridEspecialidades/GridEspecialidades";

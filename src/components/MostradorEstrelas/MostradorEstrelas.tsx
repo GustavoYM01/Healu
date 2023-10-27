@@ -14,7 +14,7 @@ export default function MostradorEstrelas(props: MostradorEstrelasProps) {
       <svg
         key={index}
         xmlns="http://www.w3.org/2000/svg"
-        height="14"
+        height="12"
         viewBox="0 0 14 12"
         fill="none"
       >
@@ -29,7 +29,7 @@ export default function MostradorEstrelas(props: MostradorEstrelasProps) {
       <svg
         key={index}
         xmlns="http://www.w3.org/2000/svg"
-        height="14"
+        height="12"
         viewBox="0 0 26 24"
         fill="#000"
       >
@@ -43,5 +43,5 @@ export default function MostradorEstrelas(props: MostradorEstrelasProps) {
     );
   });
 
-  return <div className={`flex items-center ${props.className ?? ""}`}>{estrelas}</div>;
+  return <div className={`flex items-center gap-[.3rem] ${props.className ?? ""}`}>{estrelas}</div>;
 }
