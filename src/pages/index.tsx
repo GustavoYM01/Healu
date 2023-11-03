@@ -4,6 +4,7 @@ import { Usuario } from "@/models/Usuario";
 import Image from "next/image";
 import loadingSpinner from "../assets/loading-spinner.gif";
 import Link from "next/link";
+import Logo from "@/components/Logo/Logo";
 
 export default function Home() {
   const [usuario, setUsuario] = useState<Usuario>({
@@ -45,25 +46,31 @@ export default function Home() {
     </div>
   ) : (
     <div>
-      <h1 className="text-center text-4xl pt-[2rem]">CADASTRE-SE</h1>
-      <div className="mt-[2rem]">
+      <Logo className="pl-[1rem] pt-[1rem]" />
+      <h1 className="text-center text-4xl pt-[2rem]">Cadastre-se</h1>
+      <div className="mt-[.5rem]">
         <form
           className="
+          max-w-fit mx-auto
+          px-[1rem] py-[1rem]
+          rounded-lg
           flex flex-col items-center 
           gap-[1rem]
+          bg-[#EFF2FC]
           "
           onSubmit={criarSalvarUsuario}
         >
           <div>
-            <label className="flex pb-2">Email</label>
+            <label className="flex pb-2">Informe seu e-mail</label>
             <input
               className="
               outline-none 
-              bg-slate-500 text-white 
+              bg-[#CED2E4] text-[#222] 
               p-2 rounded-lg
+              min-w-[15rem]
               "
               type="email"
-              placeholder="Informe seu e-mail"
+              placeholder="Digite um e-mail..."
               required
               value={usuario.email}
               onChange={(e) =>
@@ -72,15 +79,16 @@ export default function Home() {
             />
           </div>
           <div>
-            <label className="flex pb-2">Senha</label>
+            <label className="flex pb-2">Crie uma senha</label>
             <input
               className="
               outline-none 
-              bg-slate-500 text-white 
+              bg-[#CED2E4] text-[#222] 
               p-2 rounded-lg
+              min-w-[15rem]
               "
               type="password"
-              placeholder="Informe uma senha"
+              placeholder="Digite uma senha..."
               required
               value={usuario.senha}
               onChange={(e) =>
@@ -98,23 +106,28 @@ export default function Home() {
             </span>
           )}
           <input
-            className="bg-slate-800 text-white p-2 rounded-md cursor-pointer"
+            className="
+            w-full
+            bg-[#2642D9] text-white p-2 rounded-md cursor-pointer
+            transition-all ease-in-out
+            hover:bg-[#2926d9]
+            "
             type="submit"
             value="Cadastrar"
           />
-          <span>
-            Já possui conta?{" "}
-            <Link
-              className="
-          text-[#44cb4f]
-          hover:border-b-2
-          "
-              href={"/entrar"}
-            >
-              Entre
-            </Link>
-          </span>
         </form>
+        <p className="text-center pt-[.5rem]">
+          Já possui conta?{" "}
+          <Link
+            className="
+            text-[#2642D9]
+            hover:text-[#2926d9]
+          "
+            href={"/entrar"}
+          >
+            Entre
+          </Link>
+        </p>
       </div>
     </div>
   );

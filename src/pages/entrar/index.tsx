@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import loadingSpinner from "../../assets/loading-spinner.gif";
+import Logo from "@/components/Logo/Logo";
 
 export default function Entrar() {
   const [usuario, setUsuario] = useState<Usuario>({
@@ -41,25 +42,31 @@ export default function Entrar() {
     </div>
   ) : (
     <div>
-      <h1 className="text-center text-4xl pt-[2rem]">ENTRAR</h1>
-      <div className="mt-[2rem]">
+      <Logo className="pl-[1rem] pt-[1rem]" />
+      <h1 className="text-center text-4xl pt-[2rem]">Entrar</h1>
+      <div className="mt-[.5rem]">
         <form
           className="
-      flex flex-col items-center 
-      gap-[1rem]
-      "
+          max-w-fit mx-auto
+          px-[1rem] py-[1rem]
+          rounded-lg
+          flex flex-col items-center 
+          gap-[1rem]
+          bg-[#EFF2FC]
+          "
           onSubmit={autenticarUsuario}
         >
           <div>
-            <label className="flex pb-2">Email</label>
+            <label className="flex pb-2">E-mail</label>
             <input
               className="
-    outline-none 
-    bg-slate-500 text-white 
-    p-2 rounded-lg
-    "
+              outline-none 
+              bg-[#CED2E4] text-[#222] 
+              p-2 rounded-lg
+              min-w-[15rem]
+              "
               type="email"
-              placeholder="Informe seu e-mail"
+              placeholder="Digite seu e-mail..."
               required
               value={usuario.email}
               onChange={(e) =>
@@ -71,12 +78,13 @@ export default function Entrar() {
             <label className="flex pb-2">Senha</label>
             <input
               className="
-    outline-none 
-    bg-slate-500 text-white 
-    p-2 rounded-lg
-    "
+              outline-none 
+              bg-[#CED2E4] text-[#222] 
+              p-2 rounded-lg
+              min-w-[15rem]
+              "
               type="password"
-              placeholder="Informe a senha"
+              placeholder="Digite sua senha..."
               required
               value={usuario.senha}
               onChange={(e) =>
@@ -87,30 +95,35 @@ export default function Entrar() {
           {msgErro && (
             <span
               className="
-      text-[firebrick] text-center max-w-[200px]
-      "
+              text-[firebrick] text-center max-w-[200px]
+              "
             >
               {msgErro}
             </span>
           )}
           <input
-            className="bg-slate-800 text-white p-2 rounded-md cursor-pointer"
+            className="
+            w-full
+            bg-[#2642D9] text-white p-2 rounded-md cursor-pointer
+            transition-all ease-in-out
+            hover:bg-[#2926d9]
+            "
             type="submit"
             value="Entrar"
           />
-          <span>
-            Não tem uma conta?{" "}
-            <Link
-              className="
-      text-[#4461cb]
-      hover:border-b-2
-      "
-              href={"/"}
-            >
-              Cadastre-se
-            </Link>
-          </span>
         </form>
+        <p className="text-center pt-[.5rem]">
+          Não possui uma conta?{" "}
+          <Link
+            className="
+              text-[#2642D9]
+              hover:text-[#2926d9]
+              "
+            href={"/"}
+          >
+            Cadastre-se
+          </Link>
+        </p>
       </div>
     </div>
   );

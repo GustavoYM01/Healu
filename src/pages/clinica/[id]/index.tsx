@@ -464,7 +464,7 @@ export default function Clinica() {
                 return (
                   <div
                     className="
-                    max-w-[84%]
+                    max-w-[1070px]
                   bg-[#EFF2FC] mt-[1rem] p-4
                   rounded-lg
                   "
