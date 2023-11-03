@@ -1,57 +1,52 @@
-import React, { useEffect } from "react";
-import Yoshi from "../../assets/yoshi-férias.jpg";
+import React, { useEffect, useState } from "react";
+import Loading from "../../assets/loading-spinner.gif";
 import Image from "next/image";
-import { Carousel } from "@mantine/carousel";
+import MenuLateral from "@/components/MenuLateral/MenuLateral";
+import ClinicasChat from "@/components/ClinicasChat/ClinicasChat";
+import { collection, getDocs } from "firebase/firestore";
+import { firebase } from "@/firebase/config";
 
 export default function Chats() {
+  const [carregando, setCarregando] = useState(true);
+  const [nomesClinicas, setNomesClinicas] = useState<string[]>([]);
+
+  const primeiraLetraMaiuscula = (termo: string) => {
+    return termo.charAt(0).toUpperCase() + termo.substring(1);
+  };
+
+  const obterClinicas = async () => {
+    await getDocs(collection(firebase.db, "clinica")).then((x) => {
+      if (x.size > 0) {
+        let arrNomes: string[] = [];
+        x.forEach((clinica) =>
+          arrNomes.push(primeiraLetraMaiuscula(clinica.data().id))
+        );
+        setNomesClinicas(arrNomes);
+      }
+    });
+  };
+
   useEffect(() => {
-    const el: any = document.getElementsByClassName(
-      "mantine-2yup0d" || "mantine-UnstyledButton-root"
-    );
-    if (el.length > 0) {
-      Array.from(el).forEach((element: any) => {
-        element.style.backgroundColor = "#fff";
-      });
-    }
+    setCarregando(false);
+    obterClinicas();
   }, []);
-  return (
-    <div className="bg-zinc-300 w-full h-[100vh] py-8">
-      <Carousel
-        withIndicators
-        loop
-        sx={{ maxWidth: 620 }}
-        mx="auto"
-        height={400}
-        styles={{
-          indicator: {
-            display: "block",
-            transition: "width 250ms ease",
-            "&[aria-hidden]": {
-              background: "rgb(255, 255, 255)",
-            },
-            "&[data-active]": {
-              backgroundColor: "#ffffff",
-            },
-          },
-        }}
-      >
-        <Carousel.Slide>
-          <Image src={Yoshi} alt="" />
-        </Carousel.Slide>
-        <Carousel.Slide>
-          <Image src={Yoshi} alt="" />
-        </Carousel.Slide>
-        <Carousel.Slide>
-          <Image src={Yoshi} alt="" />
-        </Carousel.Slide>
-        {/* <Carousel.Slide>
-          <Image className="bg-center bg-contain" src={Yoshi} alt="" />
-        </Carousel.Slide>
-        <Carousel.Slide>
-          <Image className="bg-center bg-contain" src={Yoshi} alt="" />
-        </Carousel.Slide> */}
-      </Carousel>
+  
+  return carregando ? (
+    <div className="flex flex-col items-center">
+      <Image src={Loading} alt="" />
+    </div>
+  ) : (
+    <div>
+      <MenuLateral />
+      <ClinicasChat
+        className="absolute top-[1rem] left-[230px]"
+        arrClinicas={nomesClinicas}
+      />
+      {/* DIVISOR */}
+      <div className="
+      absolute top-0 left-[400px] 
+      h-[100vh] w-1 bg-[#EFF2FC]
+      "></div>
     </div>
   );
 }
-//npm install embla-carousel-react @mantine/carousel

@@ -145,7 +145,7 @@ export default function CardAvaliacoesDetalhadas({
       if (Array.from(avaliacoes).length > 0) setCarregando(false);
       setCarregando(false);
     }
-  }, [id, avaliacoes]);
+  }, [id, avaliacoes, notasCont]);
 
   return carregando ? (
     <div className="flex justify-center">

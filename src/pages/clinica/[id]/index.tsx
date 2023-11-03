@@ -261,6 +261,7 @@ export default function Clinica() {
             className="relative cursor-pointer"
             onClick={() => setSubMenu("destaques")}
           >
+            {/* DESTAQUES */}
             <p>Destaques</p>
             {subMenu === "destaques" && (
               <div
@@ -275,6 +276,7 @@ export default function Clinica() {
             className="relative cursor-pointer"
             onClick={() => setSubMenu("informacoes")}
           >
+            {/* INFORMAÇÕES */}
             <p>Informações</p>
             {subMenu === "informacoes" && (
               <div
@@ -289,6 +291,7 @@ export default function Clinica() {
             className="relative cursor-pointer"
             onClick={() => setSubMenu("avaliacoes")}
           >
+            {/* AVALIAÇÕES */}
             <p>Avaliações</p>
             {subMenu === "avaliacoes" && (
               <div
@@ -301,11 +304,6 @@ export default function Clinica() {
           </div>
         </div>
       </div>
-      {/* 
-        Se for destaques, ...
-        Se for informações, ...
-        Se for avaliações, ...
-      */}
       <div
         className="
       w-[calc(100%-244px)]

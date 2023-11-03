@@ -20,7 +20,7 @@ interface ItemGridClinicaProps {
 }
 
 export default function ItemGridClinica(props: ItemGridClinicaProps) {
-  const [infosClinica, setInfosClinica] = useState({});
+
   function unidadeFederativaPorExtenso(uf: string) {
     return uf.toLowerCase().includes("sp")
       ? "São Paulo"
