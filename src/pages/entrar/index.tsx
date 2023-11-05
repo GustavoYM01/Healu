@@ -43,7 +43,7 @@ export default function Entrar() {
   ) : (
     <div>
       <Logo className="pl-[1rem] pt-[1rem]" />
-      <h1 className="text-center text-4xl pt-[2rem]">Entrar</h1>
+      <h1 className="text-center text-4xl pt-[4rem]">Entrar</h1>
       <div className="mt-[.5rem]">
         <form
           className="
@@ -63,7 +63,7 @@ export default function Entrar() {
               outline-none 
               bg-[#CED2E4] text-[#222] 
               p-2 rounded-lg
-              min-w-[15rem]
+              min-w-[20rem]
               "
               type="email"
               placeholder="Digite seu e-mail..."
@@ -81,7 +81,7 @@ export default function Entrar() {
               outline-none 
               bg-[#CED2E4] text-[#222] 
               p-2 rounded-lg
-              min-w-[15rem]
+              min-w-[20rem]
               "
               type="password"
               placeholder="Digite sua senha..."

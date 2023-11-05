@@ -66,7 +66,7 @@ export default function Chat() {
         <div
           key={objs.id}
           className={`${
-            objs.de !== id ? "bg-zinc-900" : "bg-slate-700"
+            objs.de !== id ? "bg-[#2642D9]" : "bg-[#EFF2FC]"
           } text-white py-1 px-2 mt-2`}
         >
           <li>{objs.texto}</li>

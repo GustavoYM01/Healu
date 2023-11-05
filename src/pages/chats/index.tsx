@@ -5,14 +5,11 @@ import MenuLateral from "@/components/MenuLateral/MenuLateral";
 import ClinicasChat from "@/components/ClinicasChat/ClinicasChat";
 import { collection, getDocs } from "firebase/firestore";
 import { firebase } from "@/firebase/config";
+import { primeiraLetraMaiuscula } from "@/functions/primeiraLetraMaiuscula";
 
 export default function Chats() {
   const [carregando, setCarregando] = useState(true);
   const [nomesClinicas, setNomesClinicas] = useState<string[]>([]);
-
-  const primeiraLetraMaiuscula = (termo: string) => {
-    return termo.charAt(0).toUpperCase() + termo.substring(1);
-  };
 
   const obterClinicas = async () => {
     await getDocs(collection(firebase.db, "clinica")).then((x) => {
@@ -43,10 +40,10 @@ export default function Chats() {
         arrClinicas={nomesClinicas}
       />
       {/* DIVISOR */}
-      <div className="
+      {/* <div className="
       absolute top-0 left-[400px] 
       h-[100vh] w-1 bg-[#EFF2FC]
-      "></div>
+      "></div> */}
     </div>
   );
 }

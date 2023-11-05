@@ -47,7 +47,7 @@ export default function Home() {
   ) : (
     <div>
       <Logo className="pl-[1rem] pt-[1rem]" />
-      <h1 className="text-center text-4xl pt-[2rem]">Cadastre-se</h1>
+      <h1 className="text-center text-4xl pt-[4rem]">Cadastre-se</h1>
       <div className="mt-[.5rem]">
         <form
           className="
@@ -67,7 +67,7 @@ export default function Home() {
               outline-none 
               bg-[#CED2E4] text-[#222] 
               p-2 rounded-lg
-              min-w-[15rem]
+              min-w-[20rem]
               "
               type="email"
               placeholder="Digite um e-mail..."
@@ -85,7 +85,7 @@ export default function Home() {
               outline-none 
               bg-[#CED2E4] text-[#222] 
               p-2 rounded-lg
-              min-w-[15rem]
+              min-w-[20rem]
               "
               type="password"
               placeholder="Digite uma senha..."
