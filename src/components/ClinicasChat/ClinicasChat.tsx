@@ -20,6 +20,7 @@ import {
 } from "firebase/firestore";
 import { firebase } from "@/firebase/config";
 import { verificarContextoUsuario } from "@/functions/verificarContextoUsuario";
+import { Mensagem } from "@/models/Mensagem";
 
 interface ClinicasChatProps {
   className?: string;
@@ -33,7 +34,7 @@ export default function ClinicasChat({
   const [selecionado, setSelecionado] = useState<number | null>(null);
   const [destinatario, setDest] = useState("");
   const [msg, setMsg] = useState(""); // Do input para enviar mensagem
-  const [mensagens, setMensagens] = useState<any>([]); // Que vem do Firebase
+  const [mensagens, setMensagens] = useState<Mensagem[]>([]); // Que vem do Firebase
   const { usuario } = useContext(UserCtx);
 
   const enviarMsg = async (e: FormEvent) => {
@@ -69,18 +70,18 @@ export default function ClinicasChat({
     const ano = data.getFullYear();
 
     const mesesExtensos = [
-      "Janeiro",
+      "janeiro",
       "Fevereiro",
-      "Março",
-      "Abril",
-      "Maio",
-      "Junho",
-      "Julho",
-      "Agosto",
-      "Setembro",
-      "Outubro",
-      "Novembro",
-      "Dezembro",
+      "março",
+      "abril",
+      "maio",
+      "junho",
+      "julho",
+      "agosto",
+      "setembro",
+      "outubro",
+      "novembro",
+      "dezembro",
     ];
 
     return `${dia} de ${mesesExtensos[mes - 1]} de ${ano}`;
@@ -90,39 +91,57 @@ export default function ClinicasChat({
     return s + (Math.random() * 900).toFixed(1);
   };
 
+  const agruparMensagensPorData = (mensagens: Mensagem[]) => {
+    const grupos: any = {};
+    if (mensagens.length > 0) {
+      mensagens.forEach((mensagem) => {
+        const data = formatarData(mensagem.data.toDate());
+        if (!grupos[data]) {
+          grupos[data] = [];
+        }
+        grupos[data].push(mensagem);
+      });
+      return grupos;
+    }
+  };
+
   const renderizarMsgs = () => {
-    const datasExibidas = new Map();
-    return mensagens.map((x: any, i: any) => {
-      const data = formatarData(x.data.toDate());
-      if (!datasExibidas.has(data)) {
-        datasExibidas.set(data, true);
+    if (mensagens.length > 0) {
+      const gruposDeMensagens = agruparMensagensPorData(mensagens);
+      return Object.entries(gruposDeMensagens).map(([data, msgs]) => {
         return (
-          <div key={novoValorKeyProp(x.id)} className="max-w-fit mx-auto">
-            {data}
-          </div>
+          <>
+            <div key={novoValorKeyProp(data)} className="max-w-fit mx-auto">
+              {data}
+            </div>
+            {mensagens.map((mensagem) => {
+              return (
+                <div
+                  key={novoValorKeyProp(mensagem.id)}
+                  className={`
+                rounded-lg max-w-fit
+                ${
+                  mensagem.de !== destinatario
+                    ? "bg-[#2642D9] ml-auto"
+                    : "bg-[#EFF2FC]"
+                }
+                text-white py-1 px-2 mt-2
+                `}
+                >
+                  <li>{mensagem.texto}</li>
+                  <span className="block text-right text-sm pt-2">
+                    {mensagem.data.toDate().toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </span>
+                </div>
+              );
+            })}
+          </>
         );
-      }
-      return (
-        <>
-          <div
-            key={novoValorKeyProp(x.id)}
-            className={`
-          rounded-lg max-w-fit
-          ${x.de !== destinatario ? "bg-[#2642D9] ml-auto" : "bg-[#EFF2FC]"} 
-          text-white py-1 px-2 mt-2
-          `}
-          >
-            <li>{x.texto}</li>
-            <span className="block text-right text-sm pt-2">
-              {x.data.toDate().toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
-            </span>
-          </div>
-        </>
-      );
-    });
+      });
+    }
   };
 
   useEffect(() => {
@@ -256,7 +275,7 @@ export default function ClinicasChat({
             <form onSubmit={enviarMsg}>
               <input
                 className="
-                min-w-[25rem]
+                w-[100%]
                 outline-none p-2 bg-[#EFF2FC]
                 rounded-lg
                 "
