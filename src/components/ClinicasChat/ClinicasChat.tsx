@@ -33,8 +33,8 @@ export default function ClinicasChat({
 }: ClinicasChatProps) {
   const [selecionado, setSelecionado] = useState<number | null>(null);
   const [destinatario, setDest] = useState("");
-  const [msg, setMsg] = useState(""); // Do input para enviar mensagem
-  const [mensagens, setMensagens] = useState<Mensagem[]>([]); // Que vem do Firebase
+  const [msg, setMsg] = useState("");
+  const [mensagens, setMensagens] = useState<Mensagem[]>([]);
   const { usuario } = useContext(UserCtx);
 
   const enviarMsg = async (e: FormEvent) => {
@@ -107,11 +107,16 @@ export default function ClinicasChat({
 
   const renderizarMsgs = () => {
     if (mensagens.length > 0) {
-      const gruposDeMensagens = agruparMensagensPorData(mensagens);
-      return Object.entries(gruposDeMensagens).map(([data, msgs]) => {
+      return Object.entries(agruparMensagensPorData(mensagens)).map(([data, msgs]) => {
         return (
           <>
-            <div key={novoValorKeyProp(data)} className="max-w-fit mx-auto">
+            <div
+              key={novoValorKeyProp(data)}
+              className="
+            max-w-fit mx-auto px-2
+            bg-[#EFF2FC] rounded-md
+            "
+            >
               {data}
             </div>
             {mensagens.map((mensagem) => {
@@ -141,7 +146,7 @@ export default function ClinicasChat({
           </>
         );
       });
-    }
+    } else alert("Não há mensagens");
   };
 
   useEffect(() => {
@@ -272,7 +277,7 @@ export default function ClinicasChat({
             >
               <ul>{renderizarMsgs()}</ul>
             </div>
-            <form onSubmit={enviarMsg}>
+            <form className="mt-[.5rem]" onSubmit={enviarMsg}>
               <input
                 className="
                 w-[100%]
