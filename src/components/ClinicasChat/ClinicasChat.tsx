@@ -124,6 +124,7 @@ export default function ClinicasChat({
                 <div
                   key={novoValorKeyProp(mensagem.id)}
                   className={`
+                mr-[.5rem]
                 rounded-lg max-w-fit
                 ${
                   mensagem.de !== destinatario
@@ -146,7 +147,7 @@ export default function ClinicasChat({
           </>
         );
       });
-    } else alert("Não há mensagens");
+    }
   };
 
   useEffect(() => {
