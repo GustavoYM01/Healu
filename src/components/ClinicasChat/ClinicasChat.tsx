@@ -107,46 +107,50 @@ export default function ClinicasChat({
 
   const renderizarMsgs = () => {
     if (mensagens.length > 0) {
-      return Object.entries(agruparMensagensPorData(mensagens)).map(([data, msgs]) => {
-        return (
-          <>
-            <div
-              key={novoValorKeyProp(data)}
-              className="
-            max-w-fit mx-auto px-2
-            bg-[#EFF2FC] rounded-md
-            "
-            >
-              {data}
-            </div>
-            {mensagens.map((mensagem) => {
-              return (
-                <div
-                  key={novoValorKeyProp(mensagem.id)}
-                  className={`
-                mr-[.5rem]
-                rounded-lg max-w-fit
-                ${
-                  mensagem.de !== destinatario
-                    ? "bg-[#2642D9] ml-auto"
-                    : "bg-[#EFF2FC]"
+      return Object.entries(agruparMensagensPorData(mensagens)).map(
+        ([data]) => {
+          return (
+            <>
+              <div
+                key={novoValorKeyProp(data)}
+                className="
+              max-w-fit mx-auto px-2
+              bg-[#EFF2FC] rounded-md
+              "
+              >
+                {data}
+              </div>
+              {mensagens.map((mensagem) => {
+                if (formatarData(mensagem.data.toDate()) === data) {
+                  return (
+                    <div
+                      key={novoValorKeyProp(mensagem.id)}
+                      className={`
+                  mr-[.5rem]
+                  rounded-lg max-w-fit
+                  ${
+                    mensagem.de !== destinatario
+                      ? "bg-[#2642D9] ml-auto"
+                      : "bg-[#EFF2FC]"
+                  }
+                  text-white py-1 px-2 mt-2
+                  `}
+                    >
+                      <li>{mensagem.texto}</li>
+                      <span className="block text-right text-sm pt-2">
+                        {mensagem.data.toDate().toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    </div>
+                  );
                 }
-                text-white py-1 px-2 mt-2
-                `}
-                >
-                  <li>{mensagem.texto}</li>
-                  <span className="block text-right text-sm pt-2">
-                    {mensagem.data.toDate().toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
-                  </span>
-                </div>
-              );
-            })}
-          </>
-        );
-      });
+              })}
+            </>
+          );
+        }
+      );
     }
   };
 
