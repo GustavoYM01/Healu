@@ -8,7 +8,10 @@ export default function Logo({ className }: LogoProps) {
   return (
     <div
       className={`
-    flex items-center
+    flex justify-center items-center
+    pt-[1rem]
+    sm:flex sm:items-center
+    sm:justify-start
     ${className}
     `}
     >

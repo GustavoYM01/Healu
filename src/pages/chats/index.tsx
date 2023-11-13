@@ -6,6 +6,7 @@ import ClinicasChat from "@/components/ClinicasChat/ClinicasChat";
 import { collection, getDocs } from "firebase/firestore";
 import { firebase } from "@/firebase/config";
 import { primeiraLetraMaiuscula } from "@/functions/primeiraLetraMaiuscula";
+import Head from "next/head";
 
 export default function Chats() {
   const [carregando, setCarregando] = useState(true);
@@ -27,23 +28,28 @@ export default function Chats() {
     setCarregando(false);
     obterClinicas();
   }, []);
-  
+
   return carregando ? (
-    <div className="flex flex-col items-center">
-      <Image src={Loading} alt="" />
-    </div>
+    <>
+      <Head>
+        <title>Chats</title>
+      </Head>
+      <div className="flex flex-col items-center">
+        <Image src={Loading} alt="" />
+      </div>
+    </>
   ) : (
-    <div>
-      <MenuLateral />
-      <ClinicasChat
-        className="absolute top-[1rem] left-[230px]"
-        arrClinicas={nomesClinicas}
-      />
-      {/* DIVISOR */}
-      {/* <div className="
-      absolute top-0 left-[400px] 
-      h-[100vh] w-1 bg-[#EFF2FC]
-      "></div> */}
-    </div>
+    <>
+      <Head>
+        <title>Chats</title>
+      </Head>
+      <div>
+        <MenuLateral />
+        <ClinicasChat
+          className="absolute top-[1rem] left-[230px]"
+          arrClinicas={nomesClinicas}
+        />
+      </div>
+    </>
   );
 }

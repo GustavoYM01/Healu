@@ -1,6 +1,5 @@
 import { UserProvider } from "@/contexts/UserContext";
 import { sair } from "@/firebase/funcoes";
-import { verificarAutenticado } from "@/functions/verificarUsuarioAutenticado";
 import "@/styles/globals.css";
 import { MantineProvider } from "@mantine/core";
 import type { AppProps } from "next/app";
