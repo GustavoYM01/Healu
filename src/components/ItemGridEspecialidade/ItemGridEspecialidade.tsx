@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { CamposFiltros } from "@/models/CamposFiltro";
 
 interface ItemGridEspecialidadeProps {

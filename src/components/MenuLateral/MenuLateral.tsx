@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import ItensMenuLateral from "../ItensMenuLateral/ItensMenuLateral";
 import { alterarHref } from "@/functions/alterarHref";
 import { useRouter } from "next/router";

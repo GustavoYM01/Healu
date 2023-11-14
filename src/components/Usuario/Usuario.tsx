@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState, useRef, useEffect } from "react";
 export default function Usuario() {
   const [mostrarModal, setMostrarModal] = useState(false);
 
   const ref = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     window.addEventListener("click", (e: any) => {
@@ -66,10 +68,14 @@ export default function Usuario() {
         <ul className="text-center">
           <li>
             <Link
-              className="
-            transition-all ease-in-out
-            hover:text-[#2642D9]
-            "
+              className={`
+              transition-all ease-in-out
+              ${
+                router.asPath === "/dados"
+                  ? "text-[#2642D9] cursor-default"
+                  : "hover:text-[#2642D9]"
+              }
+              `}
               href="/dados"
             >
               Dados

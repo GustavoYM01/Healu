@@ -3,31 +3,20 @@ import { useRouter } from "next/router";
 import {
   collection,
   query,
-  where,
   orderBy,
   onSnapshot,
   doc,
   addDoc,
-  getDocs,
-  setDoc,
-  updateDoc,
   getDoc,
-  DocumentData,
-  serverTimestamp,
   Timestamp,
 } from "firebase/firestore";
 import { firebase } from "@/firebase/config";
 import UserCtx from "@/contexts/UserContext";
 
-interface FirestoreType {
-  data: DocumentData;
-}
-
 export default function Chat() {
   const [novaMensagem, setNovaMensagem] = useState("");
   const [mensagens, setMensagens] = useState<any>([]);
   const [nomeRemetente, setNomeRemetente] = useState("");
-  //const [outroUsuario, setOutroUsuario] = useState<FirestoreType | null>(null);
   const [erro, setErro] = useState<string | null>(null);
 
   const router = useRouter();
@@ -109,134 +98,6 @@ export default function Chat() {
       console.log(error);
     }
   }, [id, usuario]);
-  //   try {
-  //     const res = await getDoc(doc(firebase.db, "chats", idMesclado));
-  //     if (!res.exists()) {
-  //       await setDoc(doc(firebase.db, "chats", idMesclado), { mensagens: [] });
-
-  //       const res = await getDoc(
-  //         doc(firebase.db, "userChats", idUsuarioContexto)
-  //       );
-  //       const res2 = await getDoc(
-  //         doc(firebase.db, "userChats", outroUsuario!.data.id)
-  //       );
-
-  //       if (!res.exists() && !res2.exists()) {
-  //         await setDoc(doc(firebase.db, "userChats", idUsuarioContexto), {
-  //           [idMesclado + ".userInfo"]: {
-  //             id: outroUsuario!.data.id,
-  //             nome: outroUsuario!.data.email.split("@")[0],
-  //           },
-  //           [idMesclado + ".date"]: serverTimestamp(),
-  //         });
-  //         await setDoc(doc(firebase.db, "userChats", outroUsuario!.data.id), {
-  //           [idMesclado + ".userInfo"]: {
-  //             id: usuario.uid,
-  //             nome: usuario.email.split("@")[0],
-  //           },
-  //           [idMesclado + ".date"]: serverTimestamp(),
-  //         });
-  //       } else {
-  //         await updateDoc(doc(firebase.db, "userChats", idUsuarioContexto), {
-  //           [idMesclado + ".userInfo"]: {
-  //             id: outroUsuario!.data.id,
-  //             nome: outroUsuario!.data.email.split("@")[0],
-  //           },
-  //           [idMesclado + ".date"]: serverTimestamp(),
-  //         });
-
-  //         await updateDoc(
-  //           doc(firebase.db, "userChats", outroUsuario!.data.id),
-  //           {
-  //             [idMesclado + ".userInfo"]: {
-  //               id: usuario.uid,
-  //               nome: usuario.email.split("@")[0],
-  //             },
-  //             [idMesclado + ".date"]: serverTimestamp(),
-  //           }
-  //         );
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // const obterDadosOutroUsuarioEIniciarChat = async (
-  //   id: any,
-  //   idMesclado: string,
-  //   idUsuarioContexto: string
-  // ) => {
-  //   try {
-  //     const docSnap = await getDoc(doc(firebase.db, "usuarios", id as string));
-  //     if (docSnap.exists()) {
-  //       setOutroUsuario({ id: docSnap.id, data: docSnap.data() });
-
-  //       const res = await getDoc(doc(firebase.db, "chats", idMesclado));
-  //       if (!res.exists() && outroUsuario) {
-  //         await setDoc(doc(firebase.db, "chats", idMesclado), {
-  //           mensagens: [],
-  //         });
-
-  //         const res = await getDoc(
-  //           doc(firebase.db, "userChats", idUsuarioContexto)
-  //         );
-  //         const res2 = await getDoc(
-  //           doc(firebase.db, "userChats", outroUsuario!.data.id)
-  //         );
-
-  //         if (!res.exists() && !res2.exists()) {
-  //           await setDoc(doc(firebase.db, "userChats", idUsuarioContexto), {
-  //             [idMesclado + ".userInfo"]: {
-  //               id: outroUsuario!.data.id,
-  //               nome: outroUsuario!.data.email.split("@")[0],
-  //             },
-  //             [idMesclado + ".date"]: serverTimestamp(),
-  //           });
-  //           await setDoc(doc(firebase.db, "userChats", outroUsuario!.data.id), {
-  //             [idMesclado + ".userInfo"]: {
-  //               id: usuario.uid,
-  //               nome: usuario.email.split("@")[0],
-  //             },
-  //             [idMesclado + ".date"]: serverTimestamp(),
-  //           });
-  //         } else {
-  //           await updateDoc(doc(firebase.db, "userChats", idUsuarioContexto), {
-  //             [idMesclado + ".userInfo"]: {
-  //               id: outroUsuario!.data.id,
-  //               nome: outroUsuario!.data.email.split("@")[0],
-  //             },
-  //             [idMesclado + ".date"]: serverTimestamp(),
-  //           });
-
-  //           await updateDoc(
-  //             doc(firebase.db, "userChats", outroUsuario!.data.id),
-  //             {
-  //               [idMesclado + ".userInfo"]: {
-  //                 id: usuario.uid,
-  //                 nome: usuario.email.split("@")[0],
-  //               },
-  //               [idMesclado + ".date"]: serverTimestamp(),
-  //             }
-  //           );
-  //         }
-  //       } else {
-  //         console.log("AKJSNDAKJSNKJSNDJKASNDLASJ");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   if (id && usuario) {
-  //     const idMesclado: string =
-  //       usuario.uid > id ? usuario.uid + id : id + usuario.uid;
-  //     obterDadosOutroUsuarioEIniciarChat(id, idMesclado, usuario.uid);
-  //     //iniciarChat(idMesclado, usuario.uid);
-  //   }
-  // }, [id, usuario]);
 
   return (
     <div className="mx-auto mt-[2rem] max-w-[20rem]">

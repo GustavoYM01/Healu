@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import MostradorEstrelas from "../MostradorEstrelas/MostradorEstrelas";
 import {
   collection,
-  doc,
-  getDoc,
   getDocs,
   query,
   where,

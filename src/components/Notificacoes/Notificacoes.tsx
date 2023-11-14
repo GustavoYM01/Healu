@@ -10,7 +10,8 @@ export default function Notificacoes() {
   const ref = useRef(null);
 
   useEffect(() => {
-    if (router.asPath === "/home") setSvgFillBlack(true);
+    if (router.asPath === "/home" || router.asPath === "/dados")
+      setSvgFillBlack(true);
     else setSvgFillBlack(false);
     window.addEventListener("click", (e: any) => {
       if (e.target !== ref.current) setMostrarNotificacao(false);

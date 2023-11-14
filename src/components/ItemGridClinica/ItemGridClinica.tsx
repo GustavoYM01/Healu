@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Nutrife from "../../assets/clinica-nutrife.jpg";
 import Pedivida from "../../assets/clinica-pedivida.jpg";
 import Ortomove from "../../assets/clinica-ortomove.jpg";

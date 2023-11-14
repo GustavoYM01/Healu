@@ -1,13 +1,9 @@
-import Yoshi from "../../assets/yoshi-férias.jpg";
-import Dermelo1 from "../../assets/dermelo1.jpg";
-import Dermelo2 from "../../assets/dermelo2.jpg";
-import Dermelo3 from "../../assets/dermelo3.jpg";
 import Dermello from "../../assets/dermello-placeholder.jpg";
 import Image from "next/image";
 import { Carousel } from "@mantine/carousel";
 import { useEffect } from "react";
 import CarouselItem from "../CarouselItem/CarouselItem";
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { firebase } from "@/firebase/config";
 
 export default function CarouselClinicas() {

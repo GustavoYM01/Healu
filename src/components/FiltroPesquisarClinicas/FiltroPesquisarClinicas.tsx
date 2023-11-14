@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Notificacoes from "../Notificacoes/Notificacoes";
 import Usuario from "../Usuario/Usuario";
-import { DocumentData, collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query } from "firebase/firestore";
 import { firebase } from "@/firebase/config";
 import { CamposFiltros } from "@/models/CamposFiltro";
 

@@ -1,4 +1,4 @@
-import { cadastrarUsuario, login } from "@/firebase/funcoes";
+import { login } from "@/firebase/funcoes";
 import { Usuario } from "@/models/Usuario";
 import Image from "next/image";
 import Link from "next/link";
