@@ -156,7 +156,7 @@ export default function Dados() {
             "
                 type="text"
                 value={infosUser.tipoConta}
-                readOnly
+                disabled
               />
               <button
                 className="

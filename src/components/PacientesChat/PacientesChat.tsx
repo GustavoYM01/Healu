@@ -1,15 +1,10 @@
-import { FormEvent, useContext, useEffect, useState } from "react";
-import Nutrife from "../../assets/clinica-nutrife.jpg";
-import Pedivida from "../../assets/clinica-pedivida.jpg";
-import Ortomove from "../../assets/clinica-ortomove.jpg";
-import Gynelogic from "../../assets/clinica-gynelogic.jpg";
-import DeMelo from "../../assets/clinica-demelo.jpg";
-import CardioExcel from "../../assets/clinica-cardioexcel.jpg";
-import Dermello from "../../assets/dermelo2.jpg";
-import Loading from "../../assets/loading-spinner.gif";
-import Image from "next/image";
-import { primeiraLetraMaiuscula } from "@/functions/primeiraLetraMaiuscula";
 import UserCtx from "@/contexts/UserContext";
+import { firebase } from "@/firebase/config";
+import { agruparMensagensPorData } from "@/functions/agruparMensagensPorData";
+import { formatarData } from "@/functions/formatarData";
+import { novoValorKeyProp } from "@/functions/novoValorKeyProp";
+import { verificarContextoUsuario } from "@/functions/verificarContextoUsuario";
+import { Mensagem } from "@/models/Mensagem";
 import {
   Timestamp,
   addDoc,
@@ -18,26 +13,24 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
-import { firebase } from "@/firebase/config";
-import { verificarContextoUsuario } from "@/functions/verificarContextoUsuario";
-import { Mensagem } from "@/models/Mensagem";
-import { agruparMensagensPorData } from "@/functions/agruparMensagensPorData";
-import { novoValorKeyProp } from "@/functions/novoValorKeyProp";
-import { formatarData } from "@/functions/formatarData";
+import Image from "next/image";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
+import Loading from "../../assets/loading-spinner.gif";
 
-interface ClinicasChatProps {
+interface PacientesChatProps {
   className?: string;
-  arrClinicas: string[];
+  arrPacientes: Array<{ paciente: string; id: string }>;
 }
 
-export default function ClinicasChat({
+export default function PacientesChat({
   className,
-  arrClinicas,
-}: ClinicasChatProps) {
+  arrPacientes,
+}: PacientesChatProps) {
   const [selecionado, setSelecionado] = useState<number | null>(null);
+  const [nomePaciente, setNomePaciente] = useState("");
+  const [mensagens, setMensagens] = useState<Mensagem[]>([]);
   const [destinatario, setDest] = useState("");
   const [msg, setMsg] = useState("");
-  const [mensagens, setMensagens] = useState<Mensagem[]>([]);
   const { usuario } = useContext(UserCtx);
 
   const enviarMsg = async (e: FormEvent) => {
@@ -48,14 +41,14 @@ export default function ClinicasChat({
           collection(
             firebase.db,
             "mensagens",
-            usuario.uid > destinatario
-              ? usuario.uid + destinatario
-              : destinatario + usuario.uid,
+            usuario.email.split("@")[0] > destinatario
+              ? usuario.email.split("@")[0] + destinatario
+              : destinatario + usuario.email.split("@")[0],
             "chat"
           ),
           {
             texto: msg,
-            de: usuario.uid,
+            de: usuario.email.split("@")[0],
             para: destinatario,
             data: Timestamp.fromDate(new Date()),
           }
@@ -66,7 +59,6 @@ export default function ClinicasChat({
       console.log(error);
     }
   };
-
   const renderizarMsgs = () => {
     if (mensagens.length > 0) {
       return Object.entries(agruparMensagensPorData(mensagens)).map(
@@ -123,9 +115,9 @@ export default function ClinicasChat({
             collection(
               firebase.db,
               "mensagens",
-              usuario.uid > destinatario
-                ? usuario.uid + destinatario
-                : destinatario + usuario.uid,
+              usuario.email.split("@")[0] > destinatario
+                ? usuario.email.split("@")[0] + destinatario
+                : destinatario + usuario.email.split("@")[0],
               "chat"
             ),
             orderBy("data", "asc")
@@ -147,50 +139,39 @@ export default function ClinicasChat({
 
   return (
     <div className={`${className} cursor-pointer`}>
-      {!(arrClinicas.length > 0) ? (
+      {!(arrPacientes.length > 0) ? (
         <div className="flex flex-col items-center">
           <Image className="max-w-[10rem]" src={Loading} alt="" />
         </div>
       ) : (
-        arrClinicas.map((x, i) => (
+        arrPacientes.map((x, i) => (
           <div
             key={i}
-            onClick={() => {
-              setSelecionado(i);
-              setDest(x.toLowerCase());
-            }}
             className={`
           flex items-center gap-[.5rem] 
-          mb-[.5rem] py-2 px-[.5rem]
+          mb-[.5rem] ml-[.5rem]
           rounded-lg
           transition-all ease-in-out
-          ${selecionado === i && "bg-[#EFF2FC]"}
           `}
+            onClick={() => {
+              setSelecionado(i);
+              setDest(x.id);
+              setNomePaciente(x.paciente);
+            }}
           >
-            <div>
-              <Image
-                className="w-[2.5rem] h-[2.5rem] rounded-full"
-                src={
-                  x.toLowerCase().includes("nutrife")
-                    ? Nutrife
-                    : x.toLowerCase().includes("pedivida")
-                    ? Pedivida
-                    : x.toLowerCase().includes("ortomove")
-                    ? Ortomove
-                    : x.toLowerCase().includes("gynelogic")
-                    ? Gynelogic
-                    : x.toLowerCase().includes("demelo")
-                    ? DeMelo
-                    : x.toLowerCase().includes("cardioexcel")
-                    ? CardioExcel
-                    : x.toLowerCase().includes("dermello")
-                    ? Dermello
-                    : ""
-                }
-                alt=""
-              />
+            <div
+              className={`
+            transition-all ease-in-out
+            ${selecionado === i ? "bg-[#2642D9] text-white" : "bg-[#EFF2FC]"}
+            max-w-[10rem]
+            w-full
+            overflow-x-hidden
+            p-4 text-center
+            rounded-lg
+            `}
+            >
+              <p className="overflow-x-hidden">{x.paciente}</p>
             </div>
-            <p>{x}</p>
           </div>
         ))
       )}
@@ -209,28 +190,7 @@ export default function ClinicasChat({
       >
         {destinatario !== "" && (
           <div className="flex items-center gap-[1rem]">
-            <Image
-              className="w-[3rem] h-[3rem] rounded-full"
-              src={
-                destinatario.toLowerCase().includes("nutrife")
-                  ? Nutrife
-                  : destinatario.toLowerCase().includes("pedivida")
-                  ? Pedivida
-                  : destinatario.toLowerCase().includes("ortomove")
-                  ? Ortomove
-                  : destinatario.toLowerCase().includes("gynelogic")
-                  ? Gynelogic
-                  : destinatario.toLowerCase().includes("demelo")
-                  ? DeMelo
-                  : destinatario.toLowerCase().includes("cardioexcel")
-                  ? CardioExcel
-                  : destinatario.toLowerCase().includes("dermello")
-                  ? Dermello
-                  : ""
-              }
-              alt=""
-            />
-            <span>{primeiraLetraMaiuscula(destinatario)}</span>
+            <span>{nomePaciente}</span>
           </div>
         )}
         {destinatario !== "" && (
