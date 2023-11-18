@@ -189,11 +189,6 @@ export default function PacientesChat({
       "
       >
         {destinatario !== "" && (
-          <div className="flex items-center gap-[1rem]">
-            <span>{nomePaciente}</span>
-          </div>
-        )}
-        {destinatario !== "" && (
           <>
             <div
               className="
