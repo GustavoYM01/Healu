@@ -1,5 +1,8 @@
 <h1>Healu - Facilitando as Buscas Por Clínicas</h1>
 
+![image](https://github.com/GustavoYM01/Healu/assets/69603394/7ed98a1a-4f21-42d2-88c0-19c289b82cb4)
+
+<br/>
 <p><b>Tela Principal:</b></p>
 <img src="https://github.com/GustavoYM01/TRIMED-FPV/assets/69603394/66bd6326-a79f-4b8f-90b3-a8e32f108686"/>
 
