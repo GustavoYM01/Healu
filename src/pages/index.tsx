@@ -56,7 +56,7 @@ export default function Home() {
         <title>Healu - Cadastre-se</title>
       </Head>
       <div>
-        <Logo className="sm:pl-[1rem] sm:pt-[1rem]" />
+        <Logo className="sm:pl-[1rem] sm:pt-[1rem] sm:flex sm:items-center" />
         <h1 className="text-center text-4xl pt-[4rem]">Cadastre-se</h1>
         <div className="mt-[.5rem]">
           <form

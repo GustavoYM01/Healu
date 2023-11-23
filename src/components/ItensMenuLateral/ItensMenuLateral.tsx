@@ -17,9 +17,14 @@ export default function ItensMenuLateral(props: ItensMenuLateralProps) {
       className={`
       ${props.className ?? ""}
       ${props.fazParteDaRota ? "bg-[#CED2E4]" : ""}
+      ${
+        props.className ??
+        `
       flex items-center justify-start
       gap-[0.5rem] py-2 pl-4
       rounded-lg
+      `
+      }
       `}
     >
       {props.tipoItem.toLowerCase().trim() === "home" ? (

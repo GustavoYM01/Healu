@@ -1,16 +1,23 @@
 import { sair } from "@/firebase/funcoes";
 import React from "react";
 
-export default function Logout() {
+interface LogoutProps {
+  className?: string;
+}
+
+export default function Logout({ className }: LogoutProps) {
   async function logout() {
     await sair().then(() => (location.href = "/"));
   }
   return (
     <div
-      className="
-    flex items-center justify-start
-    gap-[0.5rem] py-2 pl-3
-    "
+      className={`${
+        className ??
+        `
+      flex items-center justify-start
+      gap-[0.5rem] py-2 pl-3
+      `
+      }`}
     >
       <svg
         onClick={logout}

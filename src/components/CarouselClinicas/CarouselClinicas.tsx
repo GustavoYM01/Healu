@@ -1,13 +1,17 @@
 import Dermello from "../../assets/dermello-placeholder.jpg";
+import DermelloMobile from "../../assets/hover_mobile.jpg";
 import Image from "next/image";
 import { Carousel } from "@mantine/carousel";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CarouselItem from "../CarouselItem/CarouselItem";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { firebase } from "@/firebase/config";
 
 export default function CarouselClinicas() {
+  const [mobile, setMobile] = useState(false);
+
   useEffect(() => {
+    setMobile(window.innerWidth < 600);
     const el2: any = document.querySelector(".mantine-Carousel-indicators");
     const el: any = document.getElementsByClassName(
       "mantine-2yup0d" || "mantine-UnstyledButton-root"
@@ -53,23 +57,29 @@ export default function CarouselClinicas() {
 
   return (
     <div
-      className="
-    w-[calc(100%-240px)]
-    absolute top-[6rem] left-[240px]
-    "
+      className={`${
+        mobile
+          ? `w-[22rem] mx-auto mt-[1rem]`
+          : `
+      w-[calc(100%-240px)]
+      absolute top-[6rem] left-[240px]
+      `
+      }`}
     >
       <div
-        className="
-        relative
+        className={`${
+          mobile
+            ? `w-[100%]`
+            : `relative
         w-[calc(100%-2rem)]
-        rounded-md ml-[1rem]
-        "
+        rounded-md ml-[1rem]`
+        }`}
       >
         <Carousel
           withIndicators
           loop
           sx={{ maxWidth: "63rem" }}
-          height={360}
+          height={mobile ? 180 : 360}
           styles={{
             indicator: {
               display: "block",
@@ -102,15 +112,25 @@ export default function CarouselClinicas() {
           >
             <Carousel.Slide className="relative">
               <div className="flex items-center justify-center">
-                <Image className="max-w-[1008px]" src={Dermello} alt="" />
+                <Image
+                  className="max-w-[1008px]"
+                  src={mobile ? DermelloMobile : Dermello}
+                  alt=""
+                />
               </div>
               <div
-                className="
-            absolute top-[80%] 
-            w-[100%] py-5
-            text-white
-            bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]
-            "
+                className={`${
+                  mobile
+                    ? `absolute top-[88%] 
+                w-[100%] text-white
+                bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]`
+                    : `
+                absolute top-[80%] 
+                w-[100%] py-5
+                text-white
+                bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]
+                `
+                }`}
               >
                 <div
                   className="
@@ -118,10 +138,16 @@ export default function CarouselClinicas() {
               px-4
               "
                 >
-                  <p className="font-medium text-2xl">
+                  <p
+                    className={`${
+                      mobile
+                        ? `font-medium`
+                        : `font-medium text-2xl`
+                    }`}
+                  >
                     Dermello - clínica dermatológica
                   </p>
-                  <span>São Paulo - SP</span>
+                  {!(mobile) && <span>São Paulo - SP</span>}
                 </div>
               </div>
             </Carousel.Slide>
@@ -140,15 +166,25 @@ export default function CarouselClinicas() {
           >
             <Carousel.Slide className="relative">
               <div className="flex items-center justify-center">
-                <Image className="max-w-[1008px]" src={Dermello} alt="" />
+                <Image
+                  className="max-w-[1008px]"
+                  src={mobile ? DermelloMobile : Dermello}
+                  alt=""
+                />
               </div>
               <div
-                className="
-            absolute top-[80%] 
-            w-[100%] py-5
-            text-white
-            bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]
-            "
+                className={`${
+                  mobile
+                    ? `absolute top-[88%] 
+                w-[100%] text-white
+                bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]`
+                    : `
+                absolute top-[80%] 
+                w-[100%] py-5
+                text-white
+                bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]
+                `
+                }`}
               >
                 <div
                   className="
@@ -156,10 +192,16 @@ export default function CarouselClinicas() {
               px-4
               "
                 >
-                  <p className="font-medium text-2xl">
+                  <p
+                    className={`${
+                      mobile
+                        ? `font-medium`
+                        : `font-medium text-2xl`
+                    }`}
+                  >
                     Dermello - clínica dermatológica
                   </p>
-                  <span>São Paulo - SP</span>
+                  {!(mobile) && <span>São Paulo - SP</span>}
                 </div>
               </div>
             </Carousel.Slide>
@@ -178,15 +220,25 @@ export default function CarouselClinicas() {
           >
             <Carousel.Slide className="relative">
               <div className="flex items-center justify-center">
-                <Image className="max-w-[1008px]" src={Dermello} alt="" />
+                <Image
+                  className="max-w-[1008px]"
+                  src={mobile ? DermelloMobile : Dermello}
+                  alt=""
+                />
               </div>
               <div
-                className="
-            absolute top-[80%] 
-            w-[100%] py-5
-            text-white
-            bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]
-            "
+                className={`${
+                  mobile
+                    ? `absolute top-[88%] 
+                w-[100%] text-white
+                bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]`
+                    : `
+                absolute top-[80%] 
+                w-[100%] py-5
+                text-white
+                bg-gradient-to-b from-[rgba(0,0,0,0.0)] to-[rgba(0,0,0,0.7)]
+                `
+                }`}
               >
                 <div
                   className="
@@ -194,10 +246,16 @@ export default function CarouselClinicas() {
               px-4
               "
                 >
-                  <p className="font-medium text-2xl">
+                  <p
+                    className={`${
+                      mobile
+                        ? `font-medium`
+                        : `font-medium text-2xl`
+                    }`}
+                  >
                     Dermello - clínica dermatológica
                   </p>
-                  <span>São Paulo - SP</span>
+                  {!(mobile) && <span>São Paulo - SP</span>}
                 </div>
               </div>
             </Carousel.Slide>

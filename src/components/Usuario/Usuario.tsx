@@ -61,8 +61,8 @@ export default function Usuario() {
         px-[1rem] py-[.5rem]
         bg-[#EFF2FC] rounded-md
         transition-all ease-in-out
-        opacity-0
-        ${mostrarModal && "opacity-100"}
+        opacity-0 -z-10
+        ${mostrarModal && "opacity-100 z-20"}
         `}
       >
         <ul className="text-center">

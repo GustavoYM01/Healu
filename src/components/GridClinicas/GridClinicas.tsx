@@ -14,6 +14,7 @@ export default function GridClinicas(props: GridClinicasProps) {
   const [carregando, setCarregando] = useState(true);
   const [resultadosPesquisa, setResultadosPesquisa] = useState<any[]>([]);
   const [nenhumResultado, setNenhumResultado] = useState(false);
+  const [mobile, setMobile] = useState(false);
   const [todasClinicas, setTodasClinicas] = useState<any[]>([]);
 
   async function obterClinicasComFiltro(
@@ -93,6 +94,7 @@ export default function GridClinicas(props: GridClinicasProps) {
   }
 
   useEffect(() => {
+    setMobile(window.innerWidth < 600);
     if (Object.values(props.camposFiltrados).some((x) => x.trim() !== "")) {
       obterClinicasComFiltro(
         props.camposFiltrados.especialidade,
@@ -106,20 +108,27 @@ export default function GridClinicas(props: GridClinicasProps) {
   return (
     <section
       className={`
-      w-[calc(100%-240px)] pb-[10rem]
-      absolute ${
-        Object.values(props.camposFiltrados).length > 0
+      pb-[10rem]
+      ${
+        mobile
+          ? `w-[95%] mx-auto`
+          : "w-[calc(100%-240px)] absolute left-[256px]"
+      } 
+      ${
+        !mobile && Object.values(props.camposFiltrados).length > 0
           ? "top-[6rem]"
-          : "top-[42rem]"
-      } left-[256px]
+          : !mobile
+          ? "top-[42rem]"
+          : ""
+      }
       `}
     >
       <div
-        className="
-      max-w-[63rem] 
-      flex flex-wrap 
-      items-center gap-[1rem]
-      "
+        className={`${mobile ? `w-[95%] mx-auto mt-[1rem]` : `
+        max-w-[63rem] 
+        flex flex-wrap 
+        items-center gap-[1rem]
+        `}`}
       >
         {carregando ? (
           <div className="mx-auto">

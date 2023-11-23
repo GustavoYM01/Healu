@@ -54,8 +54,8 @@ export default function Notificacoes() {
         border-b-[.6rem] border-b-[#EFF2FC]
         border-r-[.5rem] border-r-transparent
         transition-all ease-in-out
-        opacity-0
-        ${mostrarNotificacao && "opacity-100"}
+        opacity-0 -z-10
+        ${mostrarNotificacao && "opacity-100 z-20"}
         `}
         ></div>
         <div
@@ -65,8 +65,8 @@ export default function Notificacoes() {
         px-[1rem] py-[.5rem]
         bg-[#EFF2FC] rounded-md
         transition-all ease-in-out
-        opacity-0
-        ${mostrarNotificacao && "opacity-100"}
+        opacity-0 -z-10
+        ${mostrarNotificacao && "opacity-100 z-20"}
         `}
         >
           Não há notificações

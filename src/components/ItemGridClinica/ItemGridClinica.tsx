@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import Nutrife from "../../assets/clinica-nutrife.jpg";
 import Pedivida from "../../assets/clinica-pedivida.jpg";
 import Ortomove from "../../assets/clinica-ortomove.jpg";
@@ -20,6 +20,7 @@ interface ItemGridClinicaProps {
 }
 
 export default function ItemGridClinica(props: ItemGridClinicaProps) {
+  const [mobile, setMobile] = useState(false);
 
   function unidadeFederativaPorExtenso(uf: string) {
     return uf.toLowerCase().includes("sp")
@@ -37,9 +38,15 @@ export default function ItemGridClinica(props: ItemGridClinicaProps) {
       })
       .catch((e) => console.log(e));
   }
+
+  useEffect(() => setMobile(window.innerWidth < 600), []);
   return (
     <div
-      className="relative bg-[#EFF2FC] rounded-md cursor-pointer"
+      className={`${
+        mobile
+          ? `max-w-fit mx-auto mb-[1rem] bg-[#EFF2FC] rounded-md`
+          : "relative bg-[#EFF2FC] rounded-md cursor-pointer"
+      }`}
       onClick={(e: any) => obterDadosClinica(props.nomeClinica)}
     >
       <Image

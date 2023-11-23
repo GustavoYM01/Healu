@@ -9,6 +9,7 @@ interface FiltroPesquisarClinicasProps {
   funcaoCallBack: (especialidades: CamposFiltros) => void;
   limpar: boolean;
   alterarLimpar: (mostrar: boolean) => void;
+  className?: string;
 }
 
 export default function FiltroPesquisarClinicas(
@@ -97,12 +98,15 @@ export default function FiltroPesquisarClinicas(
 
   return (
     <section
-      className="
+      className={`${
+        props.className ??
+        `
       w-[calc(100%-240px)]
       fixed top-0 left-[240px]
       z-10
       min-h-fit
-      "
+      `
+      }`}
     >
       <form
         className="
@@ -110,15 +114,21 @@ export default function FiltroPesquisarClinicas(
         "
         onSubmit={(e) => submitForm(e)}
       >
-        <div className="flex items-center gap-[1rem] ml-[1rem]">
+        <div
+          className={`${
+            window.innerWidth > 600
+              ? `flex items-center gap-[1rem] ml-[1rem]`
+              : `ml-[.5rem] mr-[.5rem] flex items-center flex-wrap flex-1 gap-1`
+          }`}
+        >
           {/* ESTADO */}
           <div>
             <select
-              className="
-        font-medium
-        bg-[#EFF2FC] outline-none
-        rounded-md p-2
-        "
+              className={`
+              font-medium
+              bg-[#EFF2FC] outline-none
+              rounded-md p-2
+              ${window.innerWidth < 600 && `w-[47vw]`}`}
               value={camposFiltro.estado}
               onChange={(e) =>
                 setCamposFiltro({ ...camposFiltro, estado: e.target.value })
@@ -133,11 +143,11 @@ export default function FiltroPesquisarClinicas(
           {/* CIDADE */}
           <div>
             <select
-              className="
-        font-medium
-        bg-[#EFF2FC] outline-none
-        rounded-md p-2
-        "
+              className={`
+              font-medium
+              bg-[#EFF2FC] outline-none
+              rounded-md p-2
+              ${window.innerWidth < 600 && `w-[47vw]`}`}
               value={camposFiltro.cidade}
               onChange={(e) =>
                 setCamposFiltro({ ...camposFiltro, cidade: e.target.value })
@@ -149,15 +159,16 @@ export default function FiltroPesquisarClinicas(
               {renderizarCidades()}
             </select>
           </div>
-          {/* ESPECIALIDADE */}
           <div className="relative">
             <input
-              className="
+              className={`
               bg-[#EFF2FC]
               rounded-md
-              w-[25rem] outline-none 
+              ${
+                window.innerWidth < 600 ? "w-[95vw]" : "w-[25rem]"
+              } outline-none 
               py-2 pl-2 pr-[3rem]
-              "
+              `}
               type="text"
               placeholder="Especialidade"
               value={camposFiltro.especialidade}
@@ -170,9 +181,9 @@ export default function FiltroPesquisarClinicas(
             />
             <svg
               className="
-              absolute right-[1rem] top-[.3rem]
-              cursor-pointer
-              "
+            absolute right-[1rem] top-[.3rem]
+            cursor-pointer
+            "
               xmlns="http://www.w3.org/2000/svg"
               width="24"
               height="24"
@@ -200,10 +211,12 @@ export default function FiltroPesquisarClinicas(
               </div>
             ))}
         </div>
-        <div className="flex items-center gap-[1rem] mr-[2rem]">
-          <Notificacoes />
-          <Usuario />
-        </div>
+        {(props.className === "" || window.innerWidth > 600) && (
+          <div className="flex items-center gap-[1rem] mr-[2rem]">
+            <Notificacoes />
+            <Usuario />
+          </div>
+        )}
       </form>
     </section>
   );

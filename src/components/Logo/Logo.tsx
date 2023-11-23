@@ -7,13 +7,15 @@ interface LogoProps {
 export default function Logo({ className }: LogoProps) {
   return (
     <div
-      className={`
-    flex justify-center items-center
-    pt-[1rem]
-    sm:flex sm:items-center
-    sm:justify-start
-    ${className}
-    `}
+      className={`${
+        className ??
+        `
+      flex justify-center items-center
+      pt-[1rem]
+      sm:flex sm:items-center
+      sm:justify-start
+      `
+      }`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -10,15 +10,21 @@ import ItemGridEspecialidade from "@/components/ItemGridEspecialidade/ItemGridEs
 import GridClinicas from "@/components/GridClinicas/GridClinicas";
 import { CamposFiltros } from "@/models/CamposFiltro";
 import Head from "next/head";
+import MenuLateralMobile from "@/components/MenuLateralMobile/MenuLateralMobile";
+import Logo from "@/components/Logo/Logo";
+import Notificacoes from "@/components/Notificacoes/Notificacoes";
+import Usuario from "@/components/Usuario/Usuario";
 
 export default function Principal() {
   const [carregando, setCarregando] = useState(true);
+  const [mobile, setMobile] = useState(false);
   const [mostrarBtnLimparFiltros, setMostrarLimparFiltros] = useState(false);
   const [objCamposFiltrados, setObjCamposFiltrados] = useState(
     {} as CamposFiltros
   );
 
   useEffect(() => {
+    setMobile(window.innerWidth < 600);
     if (verificarAutenticado()) {
       setCarregando(false);
       return;
@@ -41,12 +47,30 @@ export default function Principal() {
         <title>Home</title>
       </Head>
       <div>
-        <MenuLateral />
-        <FiltroPesquisarClinicas
-          funcaoCallBack={setObjCamposFiltrados}
-          limpar={mostrarBtnLimparFiltros}
-          alterarLimpar={setMostrarLimparFiltros}
-        />
+        {mobile ? <MenuLateralMobile /> : <MenuLateral />}
+        {mobile && (
+          <div className="flex items-center justify-between mt-[.5rem]">
+            <Logo className="flex items-center p-0 ml-[.5rem]" />
+            <div className="flex items-center gap-2 mr-[.5rem]">
+              <Notificacoes />
+              <Usuario />
+            </div>
+          </div>
+        )}
+        {mobile ? (
+          <FiltroPesquisarClinicas
+            className="w-full"
+            funcaoCallBack={setObjCamposFiltrados}
+            limpar={mostrarBtnLimparFiltros}
+            alterarLimpar={setMostrarLimparFiltros}
+          />
+        ) : (
+          <FiltroPesquisarClinicas
+            funcaoCallBack={setObjCamposFiltrados}
+            limpar={mostrarBtnLimparFiltros}
+            alterarLimpar={setMostrarLimparFiltros}
+          />
+        )}
         {!(
           Object.values(objCamposFiltrados).length > 0 &&
           Object.values(objCamposFiltrados).some((x) => x.trim() !== "")
@@ -54,7 +78,13 @@ export default function Principal() {
           <>
             <CarouselClinicas />
             <GridEspecialidades>
-              <div className="max-w-[63rem] flex flex-wrap items-center gap-[1rem]">
+              <div
+                className={`${
+                  mobile
+                    ? `flex items-center justify-center flex-wrap gap-[1rem]`
+                    : `max-w-[63rem] flex flex-wrap items-center gap-[1rem]`
+                }`}
+              >
                 <ItemGridEspecialidade
                   funcaoDefinirEspecialidade={setObjCamposFiltrados}
                   mostrarBtnLimparFiltros={setMostrarLimparFiltros}
