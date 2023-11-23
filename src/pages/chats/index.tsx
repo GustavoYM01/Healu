@@ -23,7 +23,7 @@ export default function Chats() {
   const [pacientes, setPacientes] = useState<
     Array<{ paciente: string; id: string }>
   >([]);
-  const [tipoConta, setTipoConta] = useState("");
+  const [tipoConta, setTipoConta] = useState<string>("");
   const { usuario } = useContext(UserCtx);
 
   const obterClinicas = async () => {
